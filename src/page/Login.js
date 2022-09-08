@@ -4,6 +4,7 @@ import loginImg from "../assets/images/login2.png";
 import { useNavigate } from "react-router";
 import * as appUtils from "../helpers/appUtils";
 import * as API from "../Api/index";
+import logo from "../assets/images/logo.png"
 const initialDatalog = {
   email:"",
   password:"",
@@ -131,9 +132,9 @@ const [errorPassword, setErrorPassword] = useState("");
           </div>
           <div className="col-md-5 text-center">
             <img
-              src="https://webart.technology/images/logo-customizer-white/logo-color-2.png"
+              src={logo}
               alt=""
-              className="w-50"
+              className="w-50 loginLogo"
             />
             <div className="loginSec">
               <h3>login</h3>
@@ -168,9 +169,8 @@ const [errorPassword, setErrorPassword] = useState("");
                 {errorPassword.field === "password" && (
                   <p className="formErrorAlrt">{errorPassword.message}</p>
                 )}
-
               </div>
-              <Link to="/">Forgot password ?</Link>
+              <Link to="/forgot-password">Forgot password ?</Link>
               <button className="loginbtn" onClick={loginSubmit}>
                 <span>Login Now</span>
               </button>

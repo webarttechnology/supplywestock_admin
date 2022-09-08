@@ -16119,13 +16119,19 @@ body .bi:before {
   border-bottom: 1px solid #dce7f1;
 }
 .sidebar-wrapper .sidebar-header img {
-  height: 1.2rem;
+  width: 90%;
+  height: 36px !important;
 }
 .sidebar-wrapper .sidebar-toggler.x {
   display: none;
   position: absolute;
   right: 1.75rem;
   top: 0.25rem;
+}
+.sidebar-header .logo{
+  background-color: #1e1e2d;
+    padding: 4px 0 10px 10px;
+    border-radius: 9px;
 }
 .sidebar-wrapper .menu {
   font-weight: 600;
@@ -16934,6 +16940,11 @@ li {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* .logo{
+  background-color: #000;
+  padding: 20px;
+} */
 .logout a {
   color: #ffff !important;
 }
@@ -17187,4 +17198,18 @@ li {
 .formErrorAlrt{
   color: #ffb300;
   margin-top: 5px;
+}
+.otpInput{
+  justify-content: center;
+}
+.loginLogo{
+  background-color: #424b54;
+    padding: 10px;
+    width: 100% !important;
+    border-radius: 10px;
+}
+.menufLogo{
+  width: 100px;
+  height: 40px;
+  object-fit: contain;
 }

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import * as API from "../Api/index";
 const AddMenufect = () => {
-
+    const navigate = useNavigate()
     const [menuFect, setMenuFect] = useState("")
 
     const [imageData, setImageData] = useState("")
@@ -25,9 +27,23 @@ const AddMenufect = () => {
             }
             console.log("reQobj",reQobj);
             const response = await API.add_menufact(reQobj, header)
-            setMenuFect("")
-            setImageData("")
             console.log("response",response);
+            if (response.data.success === 1) {
+              toast("Data added successfuly", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "success",
+                theme: "colored",
+              });
+              navigate("/manufacturers-list")
+              setMenuFect("")
+              setImageData("")
+            }
         } catch (error) {
             
         }
@@ -35,6 +51,11 @@ const AddMenufect = () => {
     
   return (
     <>
+    <section class="section">
+      <div class="page-heading">
+        <h3>Manufacturers</h3>
+      </div>
+    
         <div className="row">
         <div className="col-md-12">
           <div class="card">
@@ -85,6 +106,7 @@ const AddMenufect = () => {
           </div>
         </div>
       </div>
+      </section>
     </>
   )
 }

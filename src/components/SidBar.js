@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import * as API from "../Api/index";
+import logo from "../assets/images/logo.png"
 const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
   const themOnchangeHandaler = () => {
     setdarkMode(!darkMode);
@@ -21,7 +22,7 @@ const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
           <div class="logo">
             <a href="index.html">
               <img
-                src="https://webart.technology/images/logo-customizer-white/logo-color-2.png"
+                src={logo}
                 alt="Logo"
               />
             </a>
@@ -101,29 +102,47 @@ const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
             </li>
             <li class="sidebar-item">
               <NavLink to="/profile" className="sidebar-link">
-                <i class="bi bi-collection-fill"></i>
+                <i class="bi bi-person-check"></i>
                 <span>View profile</span>
               </NavLink>
             </li>
             <li class="sidebar-item">
-              <NavLink to="/add-manufacturers" className="sidebar-link">
+              <NavLink to="/manufacturers-list" className="sidebar-link">
                 <i class="bi bi-stack"></i>
-                <span>Add Manufacturers</span>
+                <span>Manufacturers</span>
               </NavLink>
             </li>
             <li class="sidebar-item">
+              <NavLink to="/manage-seller" className="sidebar-link">
+                <i class="bi bi-person-fill"></i>
+                <span>Manage Seller Data</span>
+              </NavLink>
+            </li>
+            <li class="sidebar-item">
+              <NavLink to="/manage-buyer" className="sidebar-link">
+                <i class="iconly-boldAdd-User"></i>
+                <span>Manage Buyer Data</span>
+              </NavLink>
+            </li>
+            <li class="sidebar-item">
+              <NavLink to="/manage-buyer-enquiry" className="sidebar-link">
+                <i class="bi bi-ui-radios"></i>
+                <span>Manage Buyer Enquiry</span>
+              </NavLink>
+            </li>
+            {/* <li class="sidebar-item">
               <NavLink to="/form" className="sidebar-link">
                 <i class="bi bi-stack"></i>
                 <span>Form</span>
               </NavLink>
-            </li>
+            </li> */}
 
-            <li class="sidebar-item">
+            {/* <li class="sidebar-item">
               <NavLink to="/table" className="sidebar-link">
                 <i class="bi bi-collection-fill"></i>
                 <span>Table</span>
               </NavLink>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

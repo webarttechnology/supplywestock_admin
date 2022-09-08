@@ -9,6 +9,12 @@ import Login from "../page/Login";
 import Profile from "../page/Profile";
 import ChangesPassword from "../page/ChangesPassword";
 import AddMenufect from "../page/AddMenufect";
+import ForgotPassword from "../page/ForgotPassword";
+import Manufacturers from "../page/Manufacturers";
+import MenageSallerData from "../page/MenageSallerData";
+import MenageBuyerData from "../page/MenageBuyerData";
+import ManageBuyerEnquiry from "../page/ManageBuyerEnquiry";
+import { ToastContainer } from "react-toastify";
 const AppRouter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setdarkMode] = useState(localStorage.getItem("darkThem"));
@@ -24,6 +30,7 @@ const AppRouter = () => {
 
   return (
     <div className={darkMode ? "theme-dark" : ""}>
+      <ToastContainer/>
       <BrowserRouter>
         {isLogin ? (
           <>
@@ -47,6 +54,10 @@ const AppRouter = () => {
                 <Route path="/table" element={<Table />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/add-manufacturers" element={<AddMenufect />} />
+                <Route path="/manufacturers-list" element={<Manufacturers />} />
+                <Route path="/manage-seller" element={<MenageSallerData />} />
+                <Route path="/manage-buyer" element={<MenageBuyerData />} />
+                <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry />} />
                 <Route path="/change-password" element={<ChangesPassword />} />
               </Routes>
             </div>
@@ -56,6 +67,10 @@ const AppRouter = () => {
             <Route
               path="/"
               element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPassword isLogin={isLogin} setIsLogin={setIsLogin} />}
             />
           </Routes>
         )}
