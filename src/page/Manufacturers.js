@@ -14,6 +14,22 @@ const Manufacturers = () => {
       
     }
   }
+  
+  const menufactheDelete = async(menuFecId) =>{
+    const header = localStorage.getItem("_tokenCode");
+    try {
+      const response = await API.menufacther_delete(menuFecId , header)
+      console.log("response", response);
+      if (response.data.success === 1) {
+        getdetailsData()
+      }
+    } catch (error) {
+      
+    }
+  }
+  
+  
+  
 
   useEffect(() => {
     getdetailsData()
@@ -64,9 +80,9 @@ const Manufacturers = () => {
                             <a href="#" class="btn icon btn-primary">
                               <i class="bi bi-pencil"></i>
                             </a>
-                            <a href="#" class="btn icon btn-danger">
+                            <button onClick={()=>menufactheDelete(item.id)} class="btn icon btn-danger">
                               <i class="bi bi-x"></i>
-                            </a>
+                            </button>
                           </div>
                         </td>
                       </tr>

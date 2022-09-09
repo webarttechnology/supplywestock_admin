@@ -1,7 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { toast } from 'react-toastify';
+import * as API from "../Api/index";
 const ManageBuyerEnquiry = () => {
+    const [tableData, setTableData] = useState([])
+
+  const getdetailsData = async () =>{
+    const header = localStorage.getItem("_tokenCode");
+    try {
+      const response = await API.enquriys_list(header)
+      console.log("responsewwww", response);
+      setTableData(response.data.data)
+    } catch (error) {
+      
+    }
+  }
+
+  const approveAdmin = async (enquId) =>{
+    const header = localStorage.getItem("_tokenCode");
+    try {
+        const reqObj = {
+            userid:localStorage.getItem("_userId"),
+            id:enquId
+        }
+        const response = await API.enquriys_approve(reqObj, header)
+        console.log("response", response);
+        if (response.data.success === 1) {
+            getdetailsData()
+            toast(response.data.msg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "success",
+                theme: "colored",
+            });
+        }
+    } catch (error) {
+        
+    }
+  }
+
+
+  useEffect(() => {
+    getdetailsData()
+  }, [])
+
   return (
     <>
         <section class="section">
@@ -29,105 +76,41 @@ const ManageBuyerEnquiry = () => {
                         <thead>
                             <tr>
                             <th>No.</th>
-                            <th>NAME</th>
-                            <th>RATE</th>
-                            <th>SKILL</th>
-                            <th>TYPE</th>
-                            <th>LOCATION</th>
+                            <th>Manufacturer</th>
+                            <th>Quantities</th>
+                            <th>Size</th>
+                            <th>Product details</th>
                             <th>ACTION</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <td class="text-bold-500">1</td>
-                            <td class="text-bold-500">Michael Right</td>
-                            <td>$15/hr</td>
-                            <td class="text-bold-500">UI/UX</td>
-                            <td>Remote</td>
-                            <td>Austin,Taxes</td>
-                            <td>
-                                <div class="buttons">
-                                <a href="#" class="btn icon btn-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="#" class="btn icon btn-danger">
-                                    <i class="bi bi-x"></i>
-                                </a>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>2</td>
-                            <td class="text-bold-500">Shangai,China</td>
-                            <td>$13/hr</td>
-                            <td class="text-bold-500">Graphic concepts</td>
-                            <td>Remote</td>
-                            <td>Shangai,China</td>
-                            <td>
-                                <div class="buttons">
-                                <a href="#" class="btn icon btn-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="#" class="btn icon btn-danger">
-                                    <i class="bi bi-x"></i>
-                                </a>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>3</td>
-                            <td class="text-bold-500">Tiffani Blogz</td>
-                            <td>$15/hr</td>
-                            <td class="text-bold-500">Animation</td>
-                            <td>Remote</td>
-                            <td>Austin,Texas</td>
-                            <td>
-                                <div class="buttons">
-                                <a href="#" class="btn icon btn-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="#" class="btn icon btn-danger">
-                                    <i class="bi bi-x"></i>
-                                </a>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>4</td>
-                            <td class="text-bold-500">Ashley Boul</td>
-                            <td>$15/hr</td>
-                            <td class="text-bold-500">Animation</td>
-                            <td>Remote</td>
-                            <td>Austin,Texas</td>
-                            <td>
-                                <div class="buttons">
-                                <a href="#" class="btn icon btn-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="#" class="btn icon btn-danger">
-                                    <i class="bi bi-x"></i>
-                                </a>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>5</td>
-                            <td class="text-bold-500">Mikkey Mice</td>
-                            <td>$15/hr</td>
-                            <td class="text-bold-500">Animation</td>
-                            <td>Remote</td>
-                            <td>Austin,Texas</td>
-                            <td>
-                                <div class="buttons">
-                                <a href="#" class="btn icon btn-primary">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a href="#" class="btn icon btn-danger">
-                                    <i class="bi bi-x"></i>
-                                </a>
-                                </div>
-                            </td>
-                            </tr>
+                            {tableData.map((item, index)=>(
+                                <tr>
+                                    <td class="text-bold-500">{index + 1}</td>
+                                    <td class="text-bold-500">{item.manufacturer.name}</td>
+                                    <td>{item.quantities}</td>
+                                    <td class="text-bold-500">{item.size}</td>
+                                    <td>{item.product_des}</td>
+                                    <td>
+                                        <div class="buttons">
+                                            {item.activeAdmin === "0" ? (
+                                                <button onClick={() => approveAdmin(item._id)} class="btn icon btn-primary">
+                                                    Approve
+                                                </button>
+                                            ):(
+                                                <button class="btn icon btn-success">
+                                                    Approved
+                                                </button>
+                                            )}
+                                            
+                                            <a href="#" class="btn icon btn-danger">
+                                                <i class="bi bi-x"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            
                         </tbody>
                         </table>
                     </div>

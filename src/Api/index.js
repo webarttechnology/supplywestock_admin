@@ -49,3 +49,40 @@ export const menufacther_listing = async (header) => {
         return e.response;
     }
 }
+
+export const menufacther_delete = async (data, header) => {
+    try {
+        const url = c.MENUFACTURS + "/" + data;
+        const res = await axios.delete(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+export const enquriys_list = async ( header) => {
+    try {
+        const url = c.ENQUIRIES ;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+export const enquriys_approve = async (data,  header) => {
+    try {
+        const url = c.ENQUIRIES+ "/accept/" + data.userid + "/" + data.id;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
