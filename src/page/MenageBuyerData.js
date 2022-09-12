@@ -19,6 +19,7 @@ const MenageBuyerData = () => {
   const [sellerId, setSellerId] = useState("")
   const [formData, setFormData] = useState(initialData)
   const [mobileData, setMobileData] = useState("")
+  const [mobileDataRaw, setMobileDataRaw] = useState("")
 
   
     const getdetailsData = async () =>{
@@ -26,6 +27,7 @@ const MenageBuyerData = () => {
       try {
         const response = await API.showAll_buyerData(header)
         setTableData(response.data.data)
+        
       } catch (error) {
         
       }
@@ -51,6 +53,7 @@ const MenageBuyerData = () => {
         const { name, value } = e.target;  
         if (name === "mobileNo") {
             const dataFormt = normalizeInput(value);
+            //setMobileDataRaw(dataFormt)
             setMobileData(dataFormt)
         }
         setFormData({ ...formData, [name]: value });
@@ -76,7 +79,7 @@ const MenageBuyerData = () => {
             const reqObj = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                mobileNo: mobileData ? `+1${mobileData}` : mobileData,
+                mobileNo: mobileData ? `+1${mobileData}` : mobileData ,
                 id: sellerId,
             }
             console.log("reqObj", reqObj);
@@ -207,6 +210,7 @@ const MenageBuyerData = () => {
                 <label for="basicInput">Mobile Number</label>
                 <div className="mobileNumber editPro mt-2">
                     <input type="text" 
+                        //defaultValue={mobileData}
                         className="form-control" 
                         placeholder="Mobile No" 
                         onChange={handalerChnages} 
