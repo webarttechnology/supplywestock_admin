@@ -99,6 +99,18 @@ export const showAll_sellerData = async (header) => {
     }
 }
 
+export const showAll_buyerData = async (header) => {
+    try {
+        const url = c.BUYER;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
 // ? manufacturer_saller)by id
 export const manufacturer_saller = async (data, header) => {
     try {
@@ -112,10 +124,37 @@ export const manufacturer_saller = async (data, header) => {
     }
 };
 
+// ? manufacturer_saller)by id
+export const manufacturer_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER + "/" + data;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
 // ? UPDATE BUYER
 export const user_update_seller = async (data, header) => {
     try {
         const url = c.SELLERS;
+        const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? UPDATE BUYER
+export const user_update_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER;
         const res = await axios.patch(url, data , {
             headers: JSON.parse(header),
           });

@@ -1,141 +1,227 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
-
+import { IMG } from '../Api/constant';
+import { cuntryData } from '../helpers/commonData';
+import Modal from 'react-responsive-modal';
+import * as API from "../Api/index";
+import { toast } from 'react-toastify';
+const initialData = {
+  firstName:"",
+  lastName:"",
+  emailId:"",
+  mobileNo:"",
+}
 const MenageBuyerData = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [tableData, setTableData] = useState([])
+  const [sellerId, setSellerId] = useState("")
+  const [formData, setFormData] = useState(initialData)
+  const [mobileData, setMobileData] = useState("")
+
+  
+    const getdetailsData = async () =>{
+      const header = localStorage.getItem("_tokenCode");
+      try {
+        const response = await API.showAll_buyerData(header)
+        setTableData(response.data.data)
+      } catch (error) {
+        
+      }
+    }
+
+    const normalizeInput = (value, previousValue) => {
+        if (!value) return value;
+        const currentValue = value.replace(/[^\d]/g, "");
+        const cvLength = currentValue.length;
+        if (!previousValue || value.length > previousValue.length) {
+          if (cvLength < 4) return currentValue;
+          if (cvLength < 7)
+            return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+          return `(${currentValue.slice(0, 3)}) ${currentValue.slice(
+            3,
+            6
+          )}-${currentValue.slice(6, 10)}`;
+        }
+    };
+    
+
+    const handalerChnages = (e) => {
+        const { name, value } = e.target;  
+        if (name === "mobileNo") {
+            const dataFormt = normalizeInput(value);
+            setMobileData(dataFormt)
+        }
+        setFormData({ ...formData, [name]: value });
+    } 
+
+    const openModalSellar = async(sellerId) =>{
+        const header = localStorage.getItem("_tokenCode");
+        setSellerId(sellerId)
+        setOpenModal(true)
+        try {
+            const response = await API.manufacturer_buyer(sellerId, header)
+            console.log("sellerResponse", response);
+            setFormData(response.data.data);
+            setMobileData(response.data.data.mobileNo)
+        } catch (error) {
+            
+        }
+    }
+
+    const editSellerData = async () =>{
+        const header = localStorage.getItem("_tokenCode");
+        try {
+            const reqObj = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                mobileNo: mobileData ? `+1${mobileData}` : mobileData,
+                id: sellerId,
+            }
+            console.log("reqObj", reqObj);
+            const response = await API.user_update_buyer(reqObj, header)
+            console.log("response", response);
+            if (response.data.success === 1) {
+                getdetailsData()
+                toast(response.data.msg, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    type: "success",
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                closeModal()
+            }
+        } catch (error) {
+            
+        }
+    }
+
+
+
+    const closeModal = () =>{
+        setOpenModal(false)
+    }
+
+
+    useEffect(() => {
+        getdetailsData()
+      }, [])
   return (
     <>
-        <section class="section">
-      <div class="page-heading">
-        <h3>Manage Buyer</h3>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div className='row'>
-              <div className='col-md-10'>
-                  <h4 class="card-title">Manage Buyer Data</h4>
-              </div>
-              <div className='col-md-2 text-end'>
-                  {/* <Link to="/add-manufacturers" class="btn icon btn-primary">
-                      <i class="bi bi-plus"></i>
-                  </Link> */}
-              </div>
+      <section class="section">
+          <div class="page-heading">
+            <h3>Manage Buyer</h3>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div className="col-md-12">
-              <div class="table-responsive">
-                <table class="table table-striped mb-0">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>NAME</th>
-                      <th>RATE</th>
-                      <th>SKILL</th>
-                      <th>TYPE</th>
-                      <th>LOCATION</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-bold-500">1</td>
-                      <td class="text-bold-500">Michael Right</td>
-                      <td>$15/hr</td>
-                      <td class="text-bold-500">UI/UX</td>
-                      <td>Remote</td>
-                      <td>Austin,Taxes</td>
-                      <td>
-                        <div class="buttons">
-                          <a href="#" class="btn icon btn-primary">
-                            <i class="bi bi-pencil"></i>
-                          </a>
-                          <a href="#" class="btn icon btn-danger">
-                            <i class="bi bi-x"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="text-bold-500">Shangai,China</td>
-                      <td>$13/hr</td>
-                      <td class="text-bold-500">Graphic concepts</td>
-                      <td>Remote</td>
-                      <td>Shangai,China</td>
-                      <td>
-                        <div class="buttons">
-                          <a href="#" class="btn icon btn-primary">
-                            <i class="bi bi-pencil"></i>
-                          </a>
-                          <a href="#" class="btn icon btn-danger">
-                            <i class="bi bi-x"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="text-bold-500">Tiffani Blogz</td>
-                      <td>$15/hr</td>
-                      <td class="text-bold-500">Animation</td>
-                      <td>Remote</td>
-                      <td>Austin,Texas</td>
-                      <td>
-                        <div class="buttons">
-                          <a href="#" class="btn icon btn-primary">
-                            <i class="bi bi-pencil"></i>
-                          </a>
-                          <a href="#" class="btn icon btn-danger">
-                            <i class="bi bi-x"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="text-bold-500">Ashley Boul</td>
-                      <td>$15/hr</td>
-                      <td class="text-bold-500">Animation</td>
-                      <td>Remote</td>
-                      <td>Austin,Texas</td>
-                      <td>
-                        <div class="buttons">
-                          <a href="#" class="btn icon btn-primary">
-                            <i class="bi bi-pencil"></i>
-                          </a>
-                          <a href="#" class="btn icon btn-danger">
-                            <i class="bi bi-x"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td class="text-bold-500">Mikkey Mice</td>
-                      <td>$15/hr</td>
-                      <td class="text-bold-500">Animation</td>
-                      <td>Remote</td>
-                      <td>Austin,Texas</td>
-                      <td>
-                        <div class="buttons">
-                          <a href="#" class="btn icon btn-primary">
-                            <i class="bi bi-pencil"></i>
-                          </a>
-                          <a href="#" class="btn icon btn-danger">
-                            <i class="bi bi-x"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div class="card">
+            <div class="card-header">
+              <div className='row'>
+                  <div className='col-md-10'>
+                      <h4 class="card-title">Manage Buyer Data</h4>
+                  </div>
+                  <div className='col-md-2 text-end'>
+                      {/* <Link to="/add-manufacturers" class="btn icon btn-primary">
+                          <i class="bi bi-plus"></i>
+                      </Link> */}
+                  </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div className="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                      <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th>EMAIL ID</th>
+                            <th>MOBILE NO.</th>
+                            {/* <th>MANUFACTURER</th> */}
+                            <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tableData.map((item, index)=>(
+                            <tr>
+                                <td class="text-bold-500">{index + 1}</td>
+                                <td class="text-bold-500">{item.firstName}</td>
+                                <td>{item.lastName}</td>
+                                <td class="text-bold-500">{item.emailId}</td>
+                                <td>{item.mobileNo}</td>
+                                <td>
+                                    <div class="buttons">
+                                        <span onClick={() => openModalSellar(item._id)} class="btn icon btn-primary">
+                                            <i class="bi bi-pencil"></i>
+                                        </span>
+                                        <span class="btn icon btn-danger">
+                                            <i class="bi bi-x"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </section>
+    <Modal open={openModal} onClose={closeModal}>
+        <div class="modal-content editSeller">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Seller Data</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+                <label for="basicInput">First Name</label>
+                <input type="text" onChange={handalerChnages} 
+                    value={formData.firstName} 
+                    name="firstName" class="form-control" placeholder="First Name"/>
+            </div>
+            <div class="form-group">
+                <label for="basicInput">Last Name</label>
+                <input type="text" class="form-control" 
+                    placeholder="Last Name" 
+                    onChange={handalerChnages} 
+                    value={formData.lastName}
+                    name="lastName" />
+            </div>
+            <div class="form-group">
+                <label for="basicInput">Email id</label>
+                <input type="text" class="form-control" readOnly placeholder="Email Id" 
+                    onChange={handalerChnages} 
+                    value={formData.emailId}
+                    name="emailId" 
+                />
+            </div>
+            <div class="form-group">
+                <label for="basicInput">Mobile Number</label>
+                <div className="mobileNumber editPro mt-2">
+                    <input type="text" 
+                        className="form-control" 
+                        placeholder="Mobile No" 
+                        onChange={handalerChnages} 
+                        value={mobileData}
+                        name="mobileNo"
+                    />
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" 
+            class="btn btn-primary" onClick={editSellerData}>Submit</button>
+          </div>
+        </div>
+    </Modal>
     </>
   )
 }

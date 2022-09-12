@@ -7,3 +7,4 @@ export const ADMIN = `${URL}/author`;
 export const MENUFACTURS = `${URL}/manufacturers`;
 export const ENQUIRIES = `${URL}/enquiries`;
 export const SELLERS = `${URL}/sellers`;
+export const BUYER = `${URL}/buyers`;

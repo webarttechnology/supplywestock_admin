@@ -83,7 +83,6 @@ const MenageSallerData = () => {
                 id: sellerId,
             }
             console.log("reqObj", reqObj);
-           
             const response = await API.user_update_seller(reqObj,header)
             console.log("response", response);
             if (response.data.success === 1) {
@@ -98,8 +97,8 @@ const MenageSallerData = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    });
-                    closeModal()
+                });
+                closeModal()
             }
         } catch (error) {
             
