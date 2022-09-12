@@ -4,6 +4,7 @@ import { IMG } from '../Api/constant';
 import * as API from "../Api/index";
 const Manufacturers = () => {
   const [tableData, setTableData] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");

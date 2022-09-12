@@ -17213,3 +17213,7 @@ li {
   height: 40px;
   object-fit: contain;
 }
+.editSeller{
+  border: none;
+  width: 500px;
+}

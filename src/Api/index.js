@@ -86,3 +86,41 @@ export const enquriys_approve = async (data,  header) => {
         return e.response;
     }
 }
+
+export const showAll_sellerData = async (header) => {
+    try {
+        const url = c.SELLERS;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+// ? manufacturer_saller)by id
+export const manufacturer_saller = async (data, header) => {
+    try {
+        const url = c.SELLERS + "/" + data;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? UPDATE BUYER
+export const user_update_seller = async (data, header) => {
+    try {
+        const url = c.SELLERS;
+        const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};

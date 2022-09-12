@@ -35,10 +35,10 @@ const Header = ({ ToggleSidebar, setIsLogin }) => {
           <div class="buttons">
             <ul>
               <li class="subdrop">
-                <Link to="/" class="btn icon btn-primary rounded-pill notifi">
+                {/* <Link to="/" class="btn icon btn-primary rounded-pill notifi">
                   <i class="bi bi-bell"></i>
                   <span className="notiFicationCount">5</span>
-                </Link>
+                </Link> */}
                 <ul className="subDropDwn">
                   <h4 className="notifiHeading">Notifications</h4>
                   <hr></hr>
