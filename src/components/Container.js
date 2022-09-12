@@ -1,4 +1,5 @@
 import React from "react";
+import ManageBuyerEnquiry from "../page/ManageBuyerEnquiry";
 import Table from "./Table";
 const Container = () => {
   return (
@@ -78,7 +79,7 @@ const Container = () => {
           </div>
         </div>
         <div className="row">
-          <Table />
+          <ManageBuyerEnquiry />
         </div>
       </div>
     </>

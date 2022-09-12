@@ -20,9 +20,7 @@ const MenageSallerData = () => {
     const [sellerId, setSellerId] = useState("")
     const [formData, setFormData] = useState(initialData)
     const [mobileData, setMobileData] = useState("")
-    
-    console.log("tableData", tableData);
-    console.log("sellerId", sellerId);
+
   
     const getdetailsData = async () =>{
       const header = localStorage.getItem("_tokenCode");
