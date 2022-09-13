@@ -176,7 +176,18 @@ export const seller_count = async (header) => {
     }
 };
 
-
+// ? REGISTRATION API
+export const changesPassword_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER;
+        const res = await axios.patch(url, data, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
 
 
 // ? manufacturer_saller)by id

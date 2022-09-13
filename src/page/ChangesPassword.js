@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import * as API from "../Api/index";
 const initialDatalogPass = {
     password:"",
     confirmPassword:""
@@ -22,7 +24,30 @@ const ChangesPassword = () => {
       }
 
       const changePassword = async () => {
-          
+        const header = localStorage.getItem("_tokenCode");
+          try {
+            const reqObj = {
+                password: passWordData.password,
+                id:localStorage.getItem("_userId"),
+            }
+            const response = await API.changesPassword_buyer(reqObj, header)
+            console.log("buyresponse", response);
+            if (response.data.success === 1) {
+                toast(response.data.msg, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    type: "success",
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+          } catch (error) {
+            
+          }
       }
 
   return (
