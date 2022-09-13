@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import * as appUtils from "../helpers/appUtils";
 import * as API from "../Api/index";
 import logo from "../assets/images/logo.png"
+import { toast } from "react-toastify";
 const initialDatalog = {
   email:"",
   password:"",
@@ -45,6 +46,18 @@ const [errorPassword, setErrorPassword] = useState("");
         localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
         setIsLogin(!isLogin);
         navigate("/dashboard");
+      }else{
+        toast(response.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "error",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+      });
       }
     } catch (error) {
       

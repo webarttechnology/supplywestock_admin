@@ -24,6 +24,26 @@ export const forgot_password = async (data) => {
     }
 }
 
+export const admin_mailVerifi = async (data) => {
+    try {
+        const url = c.ADMIN + "/otp-verification/" + data.id + "/" +  data.otp;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+export const reset_password_buyer = async (data) => {
+    try {
+        const url = c.BUYER + "/reset-password";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
 
 export const add_menufact = async (data, header) => {
     try {

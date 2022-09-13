@@ -17198,6 +17198,7 @@ li {
 .formErrorAlrt{
   color: #ffb300;
   margin-top: 5px;
+  text-align: left;
 }
 .otpInput{
   justify-content: center;

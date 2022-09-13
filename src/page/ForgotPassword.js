@@ -6,9 +6,16 @@ import * as appUtils from "../helpers/appUtils";
 import * as API from "../Api/index";
 import OTPInput from "otp-input-react";
 import logo from "../assets/images/logo.png"
+import { toast } from "react-toastify";
 const initialDatalog = {
   email:"",
   password:"",
+}
+
+
+const initialDatalogPass = {
+  password:"",
+  confirmPassword:""
 }
 
 const ForgotPassword = ({ isLogin, setIsLogin }) => {
@@ -16,10 +23,13 @@ const ForgotPassword = ({ isLogin, setIsLogin }) => {
   const [formData, setFormData] = useState(initialDatalog)
 //ERROR-MSGS
 const [errorMsg, setErrorMsg] = useState("");
-const [isMail, setIsMail] = useState(1);
+const [isMail, setIsMail] = useState(0);
 const [errorEmail, setErrorEmail] = useState("");
 const [errorPassword, setErrorPassword] = useState("");
 const [OTP, setOTP] = useState("");
+const [newPassError, setNewPassError] = useState("")
+const [newPassErrorCon, setNewPassErrorCon] = useState("")
+const [passWordData, setPassWordData] = useState(initialDatalogPass)
 const navigate = useNavigate();
 
   //? LOGIN SUBMIT BUTTON
@@ -30,7 +40,6 @@ const navigate = useNavigate();
       setLoading(false);
       return;
     }
-
     try {
       const reqObj = {
         emailId:formData.email,
@@ -47,7 +56,19 @@ const navigate = useNavigate();
   };
 
   const otpvarification = async () =>{
-
+    try {
+      const reqObj = {
+        id: formData.email,
+        otp: OTP,
+      }
+      const response = await API.admin_mailVerifi(reqObj)
+      console.log("response", response);
+      if (response.data.success === 1) {
+        setIsMail(2)
+      }
+    } catch (error) {
+      
+    }
   }
   
 
@@ -67,6 +88,20 @@ const navigate = useNavigate();
       }
     setFormData({ ...formData, [name]: value });
 } 
+
+const newPassHandaler = (e) =>{
+  const { name, value } = e.target;  
+  switch (name) {
+      case "password":
+        setNewPassError("");
+        break;
+      case "confirmPassword":
+        setNewPassErrorCon("");
+        break;
+      default:
+    }
+  setPassWordData({ ...passWordData, [name]: value });
+}
 
 
   const validate = () => {
@@ -97,6 +132,92 @@ const navigate = useNavigate();
 
     return flag;
   };
+
+
+  const newPasswordSet = async () =>{
+    setLoading(true);
+      let flag = validatePass();
+      if (!flag) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const reqObj = {
+          emailId: formData.email,
+          password: passWordData.password, 
+          otp: OTP
+        }
+        console.log("reqObj",reqObj);
+        const response = await API.reset_password_buyer(reqObj);
+        console.log("bbbresponse", response);
+        if (response.data.success === 1) {
+          navigate("/")
+          toast(response.data.msg, {
+            position: "top-right",
+            autoClose: 5000,
+            type: "success",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        
+      }
+  }
+
+    //VALIDATE-INPUT
+const validatePass = () => {
+  const {password, confirmPassword } =
+    passWordData;
+  let flag = true;
+  
+  // ? password
+  if (password) {
+    if (password.length < 8) {
+      setNewPassError({
+        field: "password",
+        message: "Your password is too short. It needs to be 8+ characters",
+      });
+      flag = false;
+    }
+    if (password.length > 8) {
+      setNewPassError({
+        field: "password",
+        message: "",
+      });
+      flag = true;
+    }
+  } else {
+    setNewPassError({
+      field: "password",
+      message: "Please enter your password.",
+    });
+    flag = false;
+  }
+
+  // ? confirmPassword
+
+  // ? confirmPassword
+  if (password === "" || password !== confirmPassword) {
+    setNewPassErrorCon({
+      field: "confirmPassword",
+      message: "Confirm password does not match with your password",
+    });
+    flag = false;
+  } else {
+    setNewPassErrorCon({
+      field: "confirmPassword",
+      message: "",
+    });
+    flag = true;
+  }
+
+  return flag;
+};
 
   return (
     <div className="loginBg">
@@ -137,17 +258,17 @@ const navigate = useNavigate();
                 </>
               ):isMail === 1 ? (
                 <>
-                <div class="form-group position-relative has-icon-left mb-3">
-                    <OTPInput
-                        value={OTP}
-                        onChange={setOTP}
-                        autoFocus
-                        OTPLength={6}
-                        otpType="number"
-                        disabled={false}
-                        className="otpInput"
-                      />
-                </div>
+                  <div class="form-group position-relative has-icon-left mb-3">
+                      <OTPInput
+                          value={OTP}
+                          onChange={setOTP}
+                          autoFocus
+                          OTPLength={6}
+                          otpType="number"
+                          disabled={false}
+                          className="otpInput"
+                        />
+                  </div>
                     <button className="loginbtn" onClick={otpvarification}>
                         <span>Submit</span>
                     </button>
@@ -155,22 +276,18 @@ const navigate = useNavigate();
               ):(
                 <>
                     <div class="form-group position-relative has-icon-left mb-3">
-                        <input
-                        type="email"
-                        class="form-control"
-                        placeholder="Enter your email address"
-                        value={formData.email}
-                        onChange={handalerChnages}
-                        name="email"
-                        />
-                        <div class="form-control-icon">
-                        <i class="bi bi-person"></i>
-                        </div>
-                        {errorEmail.field === "email" && (
-                        <p className="formErrorAlrt">{errorEmail.message}</p>
+                      <input onChange={newPassHandaler} type="password" name="password" value={passWordData.password} class="form-control mb-3" placeholder="Enter password" />
+                      {newPassError.field === "password" && (
+                        <p className="formErrorAlrt">{newPassError.message}</p>
+                      )}
+
+                      <input onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} type="password"
+                      class="form-control" placeholder="Confirm password" />
+                        {newPassErrorCon.field === "confirmPassword" && (
+                          <p className="formErrorAlrt">{newPassErrorCon.message}</p>
                         )}
                     </div>
-                    <button className="loginbtn" onClick={loginSubmit}>
+                    <button className="loginbtn" onClick={newPasswordSet}>
                         <span>Submit</span>
                     </button>
                 </>

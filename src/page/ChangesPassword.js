@@ -33,7 +33,7 @@ const ChangesPassword = () => {
             const response = await API.changesPassword_buyer(reqObj, header)
             console.log("buyresponse", response);
             if (response.data.success === 1) {
-                toast(response.data.msg, {
+                toast(response.data.message, {
                     position: "top-right",
                     autoClose: 5000,
                     type: "success",
