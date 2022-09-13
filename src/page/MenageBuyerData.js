@@ -53,7 +53,7 @@ const MenageBuyerData = () => {
         const { name, value } = e.target;  
         if (name === "mobileNo") {
             const dataFormt = normalizeInput(value);
-            //setMobileDataRaw(dataFormt)
+            setMobileDataRaw(dataFormt)
             setMobileData(dataFormt)
         }
         setFormData({ ...formData, [name]: value });
@@ -79,7 +79,7 @@ const MenageBuyerData = () => {
             const reqObj = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                mobileNo: mobileData ? `+1${mobileData}` : mobileData ,
+                mobileNo: mobileDataRaw ? `+1${mobileDataRaw}` : mobileData,
                 id: sellerId,
             }
             console.log("reqObj", reqObj);
@@ -98,7 +98,7 @@ const MenageBuyerData = () => {
                     progress: undefined,
                     theme: "colored",
                 });
-                closeModal()
+              closeModal()
             }
         } catch (error) {
             
@@ -106,6 +106,29 @@ const MenageBuyerData = () => {
     }
 
 
+    const deleteManageSaller = async(sellerId) => {
+      const header = localStorage.getItem("_tokenCode");
+      try {
+          const response = await API.delete_buyer(sellerId, header)
+          console.log("response", response);
+          if (response.data.success === 1) {
+              getdetailsData()
+              toast(response.data.msg, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              type: "success",
+              theme: "colored",
+              });
+          }
+      } catch (error) {
+          
+      }
+  }
 
     const closeModal = () =>{
         setOpenModal(false)
@@ -163,7 +186,7 @@ const MenageBuyerData = () => {
                                         <span onClick={() => openModalSellar(item._id)} class="btn icon btn-primary">
                                             <i class="bi bi-pencil"></i>
                                         </span>
-                                        <span class="btn icon btn-danger">
+                                        <span onClick={()=> deleteManageSaller(item._id)} class="btn icon btn-danger">
                                             <i class="bi bi-x"></i>
                                         </span>
                                     </div>
@@ -181,7 +204,7 @@ const MenageBuyerData = () => {
     <Modal open={openModal} onClose={closeModal}>
         <div class="modal-content editSeller">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Seller Data</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Buyer Data</h5>
           </div>
           <div class="modal-body">
             <div class="form-group">
@@ -208,17 +231,33 @@ const MenageBuyerData = () => {
             </div>
             <div class="form-group">
                 <label for="basicInput">Mobile Number</label>
-                <div className="mobileNumber editPro mt-2">
-                    <input type="text" 
-                        //defaultValue={mobileData}
-                        className="form-control" 
-                        placeholder="Mobile No" 
-                        onChange={handalerChnages} 
-                        value={mobileData}
-                        name="mobileNo"
-                    />
-                </div>
-            </div>
+                  <div className="mobileNumber editPro mt-2">
+                      <select className="mobileCode">
+                          {cuntryData.map((item, index) => (
+                              <>
+                                {item.code === "US" ? (
+                                  <option
+                                      name="category"
+                                      key={item.name}
+                                      value={item.dial_code}
+                                  >
+                                      { item.dial_code}
+                                  </option>
+                                  ) : (
+                                  ""
+                                  )}
+                              </>
+                          ))}
+                      </select>
+                      <input type="text" 
+                          className="form-control" 
+                          placeholder="Mobile No" 
+                          onChange={handalerChnages} 
+                          value={mobileData}
+                          name="mobileNo"
+                      />
+                  </div>
+              </div>
           </div>
           <div class="modal-footer">
           <button type="button" 

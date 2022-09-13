@@ -1,7 +1,46 @@
 import React from "react";
 import ManageBuyerEnquiry from "../page/ManageBuyerEnquiry";
 import Table from "./Table";
+import * as API from "../Api/index";
+import { useState } from "react";
+import { useEffect } from "react";
 const Container = () => {
+  const [sellerCont, setSellerCont] = useState([])
+  const [buyerCount, setBuyerCount] = useState([])
+  const [manufact, setManufact] = useState([])
+
+  console.log("sellerCont", sellerCont , buyerCount);
+
+  const getdetailsData = async () =>{
+    const header = localStorage.getItem("_tokenCode");
+    try {
+      const sellerCount = await API.seller_count(header)
+      console.log("seeeresponse", sellerCount);
+      sellerCount.data.data.map((item, index) =>(
+        <>
+          {
+            item._id === "2" ? 
+            setSellerCont(item.count) :  item._id === "3" ? setBuyerCount(item.count) : ""
+          }
+        </>
+      ))
+
+
+
+      
+      const manufactCount = await API.menufactrher_count(header)
+      console.log("manufactCount", manufactCount);
+      setManufact(manufactCount.data.data)
+    } catch (error) {
+      
+    }
+  }
+
+
+  useEffect(() => {
+    getdetailsData()
+  }, [])
+
   return (
     <>
       <div class="page-heading">
@@ -20,7 +59,7 @@ const Container = () => {
                   </div>
                   <div class="col-md-8">
                     <h6 class="text-muted font-semibold">Total User</h6>
-                    <h6 class="font-extrabold mb-0">112.000</h6>
+                    <h6 class="font-extrabold mb-0">{buyerCount + sellerCont}.00</h6>
                   </div>
                 </div>
               </div>
@@ -37,7 +76,9 @@ const Container = () => {
                   </div>
                   <div class="col-md-8">
                     <h6 class="text-muted font-semibold">Buyer</h6>
-                    <h6 class="font-extrabold mb-0">183.000</h6>
+                    <h6 class="font-extrabold mb-0">
+                      {buyerCount}.00
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -54,7 +95,7 @@ const Container = () => {
                   </div>
                   <div class="col-md-8">
                     <h6 class="text-muted font-semibold">Manufacturer </h6>
-                    <h6 class="font-extrabold mb-0">112</h6>
+                    <h6 class="font-extrabold mb-0">{manufact} . 00</h6>
                   </div>
                 </div>
               </div>
@@ -71,7 +112,7 @@ const Container = () => {
                   </div>
                   <div class="col-md-8">
                     <h6 class="text-muted font-semibold">Seller</h6>
-                    <h6 class="font-extrabold mb-0">80.000</h6>
+                    <h6 class="font-extrabold mb-0">{sellerCont}.00</h6>
                   </div>
                 </div>
               </div>

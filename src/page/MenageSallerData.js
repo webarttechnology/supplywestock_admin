@@ -20,7 +20,7 @@ const MenageSallerData = () => {
     const [sellerId, setSellerId] = useState("")
     const [formData, setFormData] = useState(initialData)
     const [mobileData, setMobileData] = useState("")
-
+    const [mobileDataRaw, setMobileDataRaw] = useState("")
   
     const getdetailsData = async () =>{
       const header = localStorage.getItem("_tokenCode");
@@ -53,6 +53,7 @@ const MenageSallerData = () => {
         if (name === "mobileNo") {
             const dataFormt = normalizeInput(value);
             setMobileData(dataFormt)
+            setMobileDataRaw(dataFormt)
         }
         setFormData({ ...formData, [name]: value });
     } 
@@ -77,7 +78,7 @@ const MenageSallerData = () => {
             const reqObj = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                mobileNo: mobileData ? `+1${mobileData}` : mobileData,
+                mobileNo: mobileDataRaw ? `+1${mobileDataRaw}` : mobileData,
                 id: sellerId,
             }
             console.log("reqObj", reqObj);
@@ -97,6 +98,30 @@ const MenageSallerData = () => {
                     theme: "colored",
                 });
                 closeModal()
+            }
+        } catch (error) {
+            
+        }
+    }
+
+    const deleteManageSaller = async(sellerId) =>{
+        const header = localStorage.getItem("_tokenCode");
+        try {
+            const response = await API.delete_saller(sellerId, header)
+            console.log("response", response);
+            if (response.data.success === 1) {
+                getdetailsData()
+                toast(response.data.msg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "success",
+                theme: "colored",
+                });
             }
         } catch (error) {
             
@@ -161,7 +186,7 @@ const MenageSallerData = () => {
                                                         <span onClick={() => openModalSellar(item._id)} class="btn icon btn-primary">
                                                             <i class="bi bi-pencil"></i>
                                                         </span>
-                                                        <span class="btn icon btn-danger">
+                                                        <span onClick={()=> deleteManageSaller(item._id)} class="btn icon btn-danger">
                                                             <i class="bi bi-x"></i>
                                                         </span>
                                                     </div>
@@ -207,6 +232,23 @@ const MenageSallerData = () => {
                 <div class="form-group">
                     <label for="basicInput">Mobile Number</label>
                     <div className="mobileNumber editPro mt-2">
+                        <select className="mobileCode">
+                            {cuntryData.map((item, index) => (
+                                <>
+                                  {item.code === "US" ? (
+                                    <option
+                                        name="category"
+                                        key={item.name}
+                                        value={item.dial_code}
+                                    >
+                                        { item.dial_code}
+                                    </option>
+                                    ) : (
+                                    ""
+                                    )}
+                                </>
+                            ))}
+                        </select>
                         <input type="text" 
                             className="form-control" 
                             placeholder="Mobile No" 

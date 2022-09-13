@@ -17217,3 +17217,22 @@ li {
   border: none;
   width: 500px;
 }
+.mobileNumber .form-control{
+  width: 80%;
+  border-radius: 0px 50px 50px 0px;
+}
+.mobileCode{
+  width: 20%;
+  border-radius: 25px 0px 0px 25px;
+  padding: 0px 20px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: none;
+  height: 39px;
+}
+.mobileNumber {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
