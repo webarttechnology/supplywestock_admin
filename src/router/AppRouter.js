@@ -57,7 +57,7 @@ const AppRouter = () => {
                 <Route path="/manufacturers-list" element={<Manufacturers />} />
                 <Route path="/manage-seller" element={<MenageSallerData />} />
                 <Route path="/manage-buyer" element={<MenageBuyerData />} />
-                <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry />} />
+                <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry setIsLogin={setIsLogin}/>} />
                 <Route path="/change-password" element={<ChangesPassword />} />
               </Routes>
             </div>

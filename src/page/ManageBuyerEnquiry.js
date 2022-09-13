@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import * as API from "../Api/index";
-const ManageBuyerEnquiry = () => {
+const ManageBuyerEnquiry = ({setIsLogin}) => {
+   const navigate = useNavigate()
     const [tableData, setTableData] = useState([])
 
   const getdetailsData = async () =>{
@@ -10,6 +11,13 @@ const ManageBuyerEnquiry = () => {
     try {
       const response = await API.enquriys_list(header)
       console.log("responsewwww", response);
+      if (response.data.success === 2) {
+        navigate("/")
+        localStorage.removeItem("isLoginCheck");
+        setIsLogin(localStorage.removeItem("isLoginCheck"));
+        localStorage.removeItem("_userId")
+        localStorage.removeItem("_tokenCode")
+      }
       setTableData(response.data.data)
     } catch (error) {
       
