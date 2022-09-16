@@ -83,10 +83,35 @@ export const add_menufact = async (data, header) => {
         return e.response;
     }
 }
+export const edit_menufact = async (data, header) => {
+    try {
+        const url = c.MENUFACTURS;
+        const res = await axios.patch(url, data, {
+            headers: JSON.parse(header),
+          });
+        //const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
 
 export const menufacther_listing = async (header) => {
     try {
         const url = c.MENUFACTURS;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+export const menufacther_listing_id = async (data, header) => {
+    try {
+        const url = c.MENUFACTURS + "/" + data;
         const res = await axios.get(url,{
             headers: JSON.parse(header),
           });

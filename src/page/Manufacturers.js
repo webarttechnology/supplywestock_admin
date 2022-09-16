@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IMG } from '../Api/constant';
 import * as API from "../Api/index";
+import Modal from 'react-responsive-modal';
+import { toast } from 'react-toastify';
 const Manufacturers = () => {
   const [tableData, setTableData] = useState([])
   const [loader, setLoader] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
+  const [menuFect, setMenuFect] = useState("")
+  const [sellerId, setSellerId] = useState("")
+  const [imageData, setImageData] = useState("")
 
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");
@@ -15,6 +21,7 @@ const Manufacturers = () => {
       
     }
   }
+  
   
   const menufactheDelete = async(menuFecId) =>{
     const header = localStorage.getItem("_tokenCode");
@@ -28,6 +35,67 @@ const Manufacturers = () => {
       
     }
   }
+
+  const imageUploading = (e) => {
+    let images = e.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      setImageData(reader.result);
+    };
+    reader.readAsDataURL(images);
+  };
+
+  const openModalSellar = async(sellerId) =>{
+    const header = localStorage.getItem("_tokenCode");
+    setSellerId(sellerId)
+    setOpenModal(true)
+    try {
+        const response = await API.menufacther_listing_id(sellerId, header)
+        console.log("sellerResponse", response);
+        setMenuFect(response.data.data.name);
+    } catch (error) {
+        
+    }
+}
+
+  const editSellerData = async () => {
+    const header = localStorage.getItem("_tokenCode");
+    try {
+        const reqObj = {
+            name: menuFect,
+            image: imageData,
+            id: sellerId,
+        }
+        console.log("reqObj", reqObj);
+        const response = await API.edit_menufact(reqObj, header)
+        console.log("response",response);
+        if (response.data.success === 1) {
+          closeModal()
+          getdetailsData()
+          toast(response.data.data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type: "success",
+            theme: "colored",
+          });
+          setMenuFect("")
+          setImageData("")
+        }
+    } catch (error) {
+        
+    }
+  }
+
+  
+
+  const closeModal = () =>{
+    setOpenModal(false)
+}
   
   
   
@@ -38,64 +106,101 @@ const Manufacturers = () => {
   
 
   return (
-    <section class="section">
-      <div class="page-heading">
-        <h3>Manufacturers</h3>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div className='row'>
-              <div className='col-md-10'>
-                  <h4 class="card-title">Manufacturers list</h4>
-              </div>
-              <div className='col-md-2 text-end'>
-                  <Link to="/add-manufacturers" class="btn icon btn-primary">
-                      <i class="bi bi-plus"></i>
-                  </Link>
-              </div>
-          </div>
+    <>
+      <section class="section">
+        <div class="page-heading">
+          <h3>Manufacturers</h3>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div className="col-md-12">
-              <div class="table-responsive">
-                <table class="table table-striped mb-0">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>NAME</th>
-                      <th>IMAGE</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tableData.map((item, index)=> (
-                      <tr key={index}>
-                        <td class="text-bold-500">{index + 1}</td>
-                        <td class="text-bold-500">{item.value} </td>
-                        <td>
-                          <img className='menufLogo' src={IMG + item.image} alt="" />
-                        </td>
-                        <td>
-                          <div class="buttons">
-                            <a href="#" class="btn icon btn-primary">
-                              <i class="bi bi-pencil"></i>
-                            </a>
-                            <button onClick={()=>menufactheDelete(item.id)} class="btn icon btn-danger">
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </td>
+        <div class="card">
+          <div class="card-header">
+            <div className='row'>
+                <div className='col-md-10'>
+                    <h4 class="card-title">Manufacturers list</h4>
+                </div>
+                <div className='col-md-2 text-end'>
+                    <Link to="/add-manufacturers" class="btn icon btn-primary">
+                        <i class="bi bi-plus"></i>
+                    </Link>
+                </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div className="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>NAME</th>
+                        <th>IMAGE</th>
+                        <th>ACTION</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {tableData.map((item, index)=> (
+                        <tr key={index}>
+                          <td class="text-bold-500">{index + 1}</td>
+                          <td class="text-bold-500">{item.value} </td>
+                          <td>
+                            <img className='menufLogo' src={IMG + item.image} alt="" />
+                          </td>
+                          <td>
+                            <div class="buttons">
+                              <span onClick={() => openModalSellar(item.id)} class="btn icon btn-primary">
+                                <i class="bi bi-pencil"></i>
+                              </span>
+                              <button onClick={()=>menufactheDelete(item.id)} class="btn icon btn-danger">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    <Modal open={openModal} onClose={closeModal}>
+        <div class="modal-content editSeller">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Manufacturers</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+                <label for="basicInput">Name</label>
+                <input type="text" onChange={(e)=> setMenuFect(e.target.value)}
+                    value={menuFect} 
+                    name="firstName" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="basicInput"> Upload image</label>
+                <label for="file" className="fileUploade">
+                    <div class="icon dripicons dripicons-browser-upload"></div>{" "}
+                        Upload image
+                    <form encType="multipart/form-data">
+                    <input
+                        hidden
+                        id="file"
+                        type="file"
+                        onChange={imageUploading}
+                        class="image-preview-filepond"
+                    />
+                    </form>
+                </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" 
+            class="btn btn-primary" onClick={editSellerData}>Submit</button>
+          </div>
+        </div>
+    </Modal>
+    </>
   )
 }
 
