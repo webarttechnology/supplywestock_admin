@@ -24,6 +24,32 @@ export const forgot_password = async (data) => {
     }
 }
 
+export const chatRoomlist = async (data, header) => {
+    try {
+        const url = c.CHATROOM + "/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+export const chatfeedShow = async (data, header) => {
+    try {
+        const url = c.CHAT + "/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
 export const admin_mailVerifi = async (data) => {
     try {
         const url = c.ADMIN + "/otp-verification/" + data.id + "/" +  data.otp;

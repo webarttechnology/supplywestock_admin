@@ -15,6 +15,7 @@ import MenageSallerData from "../page/MenageSallerData";
 import MenageBuyerData from "../page/MenageBuyerData";
 import ManageBuyerEnquiry from "../page/ManageBuyerEnquiry";
 import { ToastContainer } from "react-toastify";
+import Message from "../page/Message";
 const AppRouter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setdarkMode] = useState(localStorage.getItem("darkThem"));
@@ -57,6 +58,7 @@ const AppRouter = () => {
                 <Route path="/manufacturers-list" element={<Manufacturers />} />
                 <Route path="/manage-seller" element={<MenageSallerData />} />
                 <Route path="/manage-buyer" element={<MenageBuyerData />} />
+                <Route path="/message" element={<Message />} />
                 <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry setIsLogin={setIsLogin}/>} />
                 <Route path="/change-password" element={<ChangesPassword />} />
               </Routes>
