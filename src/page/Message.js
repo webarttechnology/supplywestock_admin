@@ -18,7 +18,7 @@ const Message = () => {
     const [chatCode, setChatCode] = useState("")
     const [text, setText] = useState("");
 
-    console.log("feedMess", feedMess);
+    console.log("chatCode", chatCode);
 
     const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
