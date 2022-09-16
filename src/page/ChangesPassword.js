@@ -24,6 +24,10 @@ const ChangesPassword = () => {
       }
 
       const changePassword = async () => {
+        let flag = validatePass();
+        if (!flag) {
+            return;
+        }
         const header = localStorage.getItem("_tokenCode");
           try {
             const reqObj = {
@@ -49,6 +53,56 @@ const ChangesPassword = () => {
             
           }
       }
+
+      //VALIDATE-INPUT
+const validatePass = () => {
+    const {password, confirmPassword } =
+      passWordData;
+    let flag = true;
+    
+    // ? password
+    if (password) {
+      if (password.length < 8) {
+        setNewPassError({
+          field: "password",
+          message: "Your password is too short. It needs to be 8+ characters",
+        });
+        flag = false;
+      }
+      if (password.length > 8) {
+        setNewPassError({
+          field: "password",
+          message: "",
+        });
+        flag = true;
+      }
+    } else {
+      setNewPassError({
+        field: "password",
+        message: "Please enter your password.",
+      });
+      flag = false;
+    }
+  
+    // ? confirmPassword
+  
+    // ? confirmPassword
+    if (password === "" || password !== confirmPassword) {
+      setNewPassErrorCon({
+        field: "confirmPassword",
+        message: "Confirm password does not match with your password",
+      });
+      flag = false;
+    } else {
+      setNewPassErrorCon({
+        field: "confirmPassword",
+        message: "",
+      });
+      flag = true;
+    }
+  
+    return flag;
+  };
 
   return (
     <>
@@ -84,7 +138,7 @@ const ChangesPassword = () => {
                                     <div class="form-group">
                                         <label for="disabledInput">Confirm Password</label>
                                         <input
-                                        type="text"
+                                        type="password"
                                         class="form-control"
                                         placeholder="Confirm Password"
                                         onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} 
