@@ -130,12 +130,12 @@ const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
                 <span>Manage Buyer Enquiry</span>
               </NavLink>
             </li>
-            {/* <li class="sidebar-item">
-              <NavLink to="/form" className="sidebar-link">
-                <i class="bi bi-stack"></i>
-                <span>Form</span>
+            <li class="sidebar-item">
+              <NavLink to="/message" className="sidebar-link">
+                <i class="bi bi-chat-left-dots-fill"></i>
+                <span>Message</span>
               </NavLink>
-            </li> */}
+            </li>
 
             {/* <li class="sidebar-item">
               <NavLink to="/table" className="sidebar-link">

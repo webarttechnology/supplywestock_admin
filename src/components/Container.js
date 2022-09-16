@@ -15,7 +15,6 @@ const Container = () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const sellerCount = await API.seller_count(header)
-      console.log("seeeresponse", sellerCount);
       sellerCount.data.data.map((item, index) =>(
         <>
           {
@@ -24,12 +23,7 @@ const Container = () => {
           }
         </>
       ))
-
-
-
-      
       const manufactCount = await API.menufactrher_count(header)
-      console.log("manufactCount", manufactCount);
       setManufact(manufactCount.data.data)
     } catch (error) {
       

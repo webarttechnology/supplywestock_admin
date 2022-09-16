@@ -16,7 +16,9 @@ const Message = () => {
     const [formData, setFormData] = useState(initial)
     const [userDetails, setUserDetails] = useState([])
     const [chatCode, setChatCode] = useState("")
-    console.log("userDetails", userDetails);
+    const [text, setText] = useState("");
+
+    console.log("feedMess", feedMess);
 
     const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
@@ -49,14 +51,13 @@ const Message = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const messageSend = () => {
+  function handleOnEnter(text) {
     socket.emit("createChat", {
-      sendBy: localStorage.getItem("_userId"),
-      chatroomCode: chatCode,
-      message: formData.message,
+        sendBy: localStorage.getItem("_userId"),
+        chatroomCode: chatCode,
+        message: text,
     });
-    setFormData(initial);
-  };
+  }
    
    useEffect(() => {
         socket.on("receiveChat", (data) => {
@@ -87,9 +88,10 @@ const Message = () => {
                                         <Messagefedd 
                                         handalerChanges={handalerChanges}
                                         userDetails={userDetails}
-                                        formData={formData} 
+                                        setText={setText} 
                                         feedMess={feedMess}
-                                        messageSend={messageSend}
+                                        text={text}
+                                        messageSend={handleOnEnter}
                                     />
                                     )}
                                     

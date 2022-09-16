@@ -26,6 +26,7 @@ const MenageBuyerData = () => {
       const header = localStorage.getItem("_tokenCode");
       try {
         const response = await API.showAll_buyerData(header)
+        console.log("MenageBuyerData", response);
         setTableData(response.data.data)
         
       } catch (error) {

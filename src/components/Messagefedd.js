@@ -1,7 +1,9 @@
 import React from 'react'
+import { useState } from 'react';
+import InputEmoji from "react-input-emoji";
+const Messagefedd = ({setText, text, userDetails,feedMess,messageSend}) => {
 
-const Messagefedd = ({handalerChanges, formData, userDetails,feedMess,messageSend}) => {
-
+      
 
   return (
     <>
@@ -28,7 +30,21 @@ const Messagefedd = ({handalerChanges, formData, userDetails,feedMess,messageSen
                 <div class="container">
                     <div class="row">
                     <div class="col-sm-12">
-                        <div class="subscribe_now">
+                        <div className="mess_type_input">
+                            <label for="file-upload" className="custom-file-upload">
+                                <i class="bi bi-paperclip"></i>
+                            </label>
+                            <input hidden id="file-upload" type="file" />
+                            <InputEmoji
+                                className="messBox"
+                                value={text}
+                                onChange={setText}
+                                cleanOnEnter
+                                onEnter={messageSend}
+                                placeholder="Type a message"
+                            />
+                        </div>
+                        {/* <div class="subscribe_now">
                             <form class="subscribe_form">
                                 <div class="input-group">
                                 <input type="text" class="form-control" name="message"
@@ -40,7 +56,7 @@ const Messagefedd = ({handalerChanges, formData, userDetails,feedMess,messageSen
                                 </span>
                                 </div>
                             </form>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

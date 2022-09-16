@@ -17377,3 +17377,24 @@ li {
 .border_right{
   border-right: 1px solid #ccc;
 }
+
+.mess_type_input {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.messBox {
+  width: 80%;
+}
+.custom-file-upload {
+  margin-bottom: 0;
+}
+.custom-file-upload svg {
+  font-size: 20px;
+  color: #294985;
+}
+.custom-file-upload i {
+  font-size: 25px;
+}
