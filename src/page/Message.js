@@ -18,7 +18,7 @@ const Message = () => {
     const [chatCode, setChatCode] = useState("")
     const [text, setText] = useState("");
 
-    console.log("chatCode", chatCode);
+    console.log("feedMess", feedMess);
 
     const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
@@ -52,9 +52,10 @@ const Message = () => {
   };
 
   function handleOnEnter(text) {
+    console.log("chatCode", chatCode);
     socket.emit("createChat", {
-        sendBy: localStorage.getItem("_userId"),
-        chatroomCode: chatCode,
+        senderId: localStorage.getItem("_userId"),
+        chatroomId: chatCode,
         message: text,
     });
   }
@@ -86,13 +87,13 @@ const Message = () => {
                                         ""
                                     ):(
                                         <Messagefedd 
-                                        handalerChanges={handalerChanges}
-                                        userDetails={userDetails}
-                                        setText={setText} 
-                                        feedMess={feedMess}
-                                        text={text}
-                                        messageSend={handleOnEnter}
-                                    />
+                                            handalerChanges={handalerChanges}
+                                            userDetails={userDetails}
+                                            setText={setText} 
+                                            feedMess={feedMess}
+                                            text={text}
+                                            messageSend={handleOnEnter}
+                                        />
                                     )}
                                     
                                 </div>
