@@ -17339,7 +17339,7 @@ li {
   padding: 15px 0;
 }
 .messfeed::-webkit-scrollbar{
-  width: 15px;
+  width: 0px;
 }
 .message img {
   width: 53%
@@ -17355,9 +17355,10 @@ li {
 .isSender{
   padding: 7px 15px;
   background: #fff;
-  float: right;
   border-radius: 5px;
   text-align: end;
+  margin-bottom: 15px;
+  width: fit-content;
 }
 .isSender p{
   margin-bottom: 0;
@@ -17397,4 +17398,18 @@ li {
 }
 .custom-file-upload i {
   font-size: 25px;
+}
+.messLeft{
+  width: 50%;
+}
+.messRight{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.react-input-emoji--button{
+  display: none !important;
+}
+.scroll {
+  height: 600px;
 }
