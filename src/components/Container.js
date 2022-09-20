@@ -30,7 +30,6 @@ const Container = () => {
     }
   }
 
-
   useEffect(() => {
     getdetailsData()
   }, [])
