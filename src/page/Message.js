@@ -17,8 +17,13 @@ const Message = () => {
     const [userDetails, setUserDetails] = useState([])
     const [chatCode, setChatCode] = useState("")
     const [text, setText] = useState("");
+    const [typeData, setTypeData] = useState("")
+    const [typeUserid, setTypeUserid] = useState("")
 
-    console.log("feedMess", feedMess);
+    const messageHandaler = (data) => {  
+        socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"), typing: data === "" ? false : true})
+        setText(data)
+    }
 
     const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
@@ -61,6 +66,14 @@ const Message = () => {
   }
    
    useEffect(() => {
+        socket.on("display", (data) => {
+            console.log("display", data);
+            setTypeData(data.typing)
+            setTypeUserid(data.user)
+            //setFeedMess(data);
+            //feedMess.push(data)
+        });
+
         socket.on("receiveChat", (data) => {
             console.log("receiveChat", data);
             setFeedMess(data);
@@ -89,10 +102,12 @@ const Message = () => {
                                         <Messagefedd 
                                             handalerChanges={handalerChanges}
                                             userDetails={userDetails}
-                                            setText={setText} 
+                                            setText={messageHandaler} 
                                             feedMess={feedMess}
                                             text={text}
+                                            typeData={typeData}
                                             messageSend={handleOnEnter}
+                                            typeUserid={typeUserid}
                                         />
                                     )}
                                     

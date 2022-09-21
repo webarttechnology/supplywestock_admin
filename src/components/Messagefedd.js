@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import InputEmoji from "react-input-emoji";
 import ScrollToBottom from "react-scroll-to-bottom";
-const Messagefedd = ({setText, text, userDetails,feedMess,messageSend}) => {
+const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData, typeUserid}) => {
 
     console.log("feedMesfesfs", feedMess);
 
@@ -39,6 +39,12 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend}) => {
         <div className='messinput'>
             <div id="subscription_area">
                 <div class="container">
+                    <div className='row'>
+                        {typeUserid === localStorage.getItem("_userId") ? (""):(
+                            <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
+                        )}
+                        
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div className="mess_type_input">

@@ -17249,6 +17249,13 @@ li {
 .sidBarMess ul li:last-child {
   border-bottom: none;
 }
+.sidBarMess{
+  overflow-y: scroll;
+  height: 400px;
+}
+.sidBarMess::-webkit-scrollbar{
+  width: 0px !important;
+}
 .headerTitle{
   text-align: left;
   border-bottom: 1px solid #ccc;
