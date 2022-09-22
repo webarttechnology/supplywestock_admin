@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import Modal from 'react-responsive-modal';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import * as API from "../Api/index";
 const ManageBuyerEnquiry = ({setIsLogin}) => {
    const navigate = useNavigate()
     const [tableData, setTableData] = useState([])
+    const [openModal, setOpenModal] = useState(false);
 
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");
@@ -51,6 +53,18 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
         
     }
   }
+
+const openModalSellar = () => {
+    setOpenModal(true)
+}
+
+
+  
+  const closeModal = () =>{
+    setOpenModal(false)
+  }
+
+  
 
 
   useEffect(() => {
@@ -114,6 +128,13 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                             <a href="#" class="btn icon btn-danger">
                                                 <i class="bi bi-x"></i>
                                             </a>
+                                            {item.activeAdmin === "0" ? (
+                                                ""
+                                            ):(
+                                                <button class="btn btn-primary icon" onClick={() => openModalSellar()}>
+                                                    Order generate
+                                                </button>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>
@@ -127,6 +148,70 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                 </div>
             </div>
         </section>
+        <Modal open={openModal} onClose={closeModal}>
+            <div class="modal-content editSeller">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order generate</h5>
+              </div>
+              <div class="modal-body">
+                {/* <div class="form-group">
+                    <label for="basicInput">First Name</label>
+                    <input type="text" onChange={handalerChnages} 
+                        value={formData.firstName} 
+                        name="firstName" class="form-control" placeholder="First Name"/>
+                </div>
+                <div class="form-group">
+                    <label for="basicInput">Last Name</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Last Name" 
+                        onChange={handalerChnages} 
+                        value={formData.lastName}
+                        name="lastName" />
+                </div>
+                <div class="form-group">
+                    <label for="basicInput">Email id</label>
+                    <input type="text" class="form-control" readOnly placeholder="Email Id" 
+                        onChange={handalerChnages} 
+                        value={formData.emailId}
+                        name="emailId" 
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="basicInput">Mobile Number</label>
+                    <div className="mobileNumber editPro mt-2">
+                        <select className="mobileCode">
+                            {cuntryData.map((item, index) => (
+                                <>
+                                  {item.code === "US" ? (
+                                    <option
+                                        name="category"
+                                        key={item.name}
+                                        value={item.dial_code}
+                                    >
+                                        { item.dial_code}
+                                    </option>
+                                    ) : (
+                                    ""
+                                    )}
+                                </>
+                            ))}
+                        </select>
+                        <input type="text" 
+                            className="form-control" 
+                            placeholder="Mobile No" 
+                            onChange={handalerChnages} 
+                            value={mobileData}
+                            name="mobileNo"
+                        />
+                    </div>
+                </div> */}
+              </div>
+              <div class="modal-footer">
+              {/* <button type="button" 
+                class="btn btn-primary" onClick={editSellerData}>Submit</button> */}
+              </div>
+            </div>
+        </Modal>
     </>
   )
 }
