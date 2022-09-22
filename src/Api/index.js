@@ -136,7 +136,20 @@ export const menufacther_delete = async (data, header) => {
 
 export const enquriys_list = async ( header) => {
     try {
-        const url = c.ENQUIRIES ;
+        const url = c.ENQUIRIES;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+export const enquriys_sellerId = async (data, header) => {
+    try {
+        const url = c.ENQUIRIES + "/sellers/" + data;
+        console.log("url", url);
         const res = await axios.get(url,{
             headers: JSON.parse(header),
           });

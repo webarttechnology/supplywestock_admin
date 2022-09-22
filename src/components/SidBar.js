@@ -119,15 +119,15 @@ const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
               </NavLink>
             </li>
             <li class="sidebar-item">
-              <NavLink to="/manage-buyer" className="sidebar-link">
-                <i class="iconly-boldAdd-User"></i>
-                <span>Manage Buyer Data</span>
-              </NavLink>
-            </li>
-            <li class="sidebar-item">
               <NavLink to="/manage-buyer-enquiry" className="sidebar-link">
                 <i class="bi bi-ui-radios"></i>
                 <span>Manage Buyer Enquiry</span>
+              </NavLink>
+            </li>
+            <li class="sidebar-item">
+              <NavLink to="/manage-order" className="sidebar-link">
+                <i class="bi bi-truck"></i>
+                <span>Manage Order Data</span>
               </NavLink>
             </li>
             <li class="sidebar-item">

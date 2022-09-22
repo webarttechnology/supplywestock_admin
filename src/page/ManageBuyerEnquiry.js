@@ -3,10 +3,27 @@ import Modal from 'react-responsive-modal';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import * as API from "../Api/index";
+const initialData = {
+    manufacturerId:"",
+    product_des:"",
+    unitPrice:"",
+    quantities:"",
+    sellerId:""
+}
 const ManageBuyerEnquiry = ({setIsLogin}) => {
+
    const navigate = useNavigate()
+   const [formData, setFormData] = useState(initialData)
     const [tableData, setTableData] = useState([])
     const [openModal, setOpenModal] = useState(false);
+    const [sellerList, setSellerList] = useState([])
+    const [buyerId, setBuyerId] = useState("")
+    const [enquerisId, setEnquerisId] = useState("")
+
+    const handalerChnages = (e) =>{
+        const { name, value } = e.target;  
+        setFormData({ ...formData, [name]: value });
+    }
 
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");
@@ -54,12 +71,36 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
     }
   }
 
-const openModalSellar = () => {
-    setOpenModal(true)
-}
+  const editSellerData = async () => {
+    try {
+        const reqObj = {
+            buyerId: buyerId,
+            enquiryId: enquerisId,
+            unitPrice: formData.unitPrice,
+            quantities: formData.quantities
+        }
+        console.log("reqObj", reqObj);
+    } catch (error) {
+        
+    }
+  }
 
 
-  
+    const openModalSellar = async (enqurisId, buyerId) => {
+        const header = localStorage.getItem("_tokenCode");
+        console.log("enqurisId", enqurisId);
+        setEnquerisId(enqurisId)
+        setBuyerId(buyerId)
+        setOpenModal(true)
+        try {
+            const response = await API.enquriys_sellerId(enqurisId, header)
+            console.log("response", response);
+            setSellerList(response.data.data)
+        } catch (error) {
+            
+        }
+    }
+
   const closeModal = () =>{
     setOpenModal(false)
   }
@@ -131,7 +172,7 @@ const openModalSellar = () => {
                                             {item.activeAdmin === "0" ? (
                                                 ""
                                             ):(
-                                                <button class="btn btn-primary icon" onClick={() => openModalSellar()}>
+                                                <button class="btn btn-primary icon" onClick={() => openModalSellar(item._id, item.buyer.emailId)}>
                                                     Order generate
                                                 </button>
                                             )}
@@ -154,61 +195,47 @@ const openModalSellar = () => {
                 <h5 class="modal-title" id="exampleModalLabel">Order generate</h5>
               </div>
               <div class="modal-body">
-                {/* <div class="form-group">
-                    <label for="basicInput">First Name</label>
-                    <input type="text" onChange={handalerChnages} 
-                        value={formData.firstName} 
-                        name="firstName" class="form-control" placeholder="First Name"/>
+                <div class="form-group">
+                    <label for="basicInput">Seller List</label>
+                    <select className="form-control" onChange={handalerChnages} name="sellerId" value={formData.sellerId}>
+                        <option>--- Select ---</option>
+                        {sellerList.map((item, index) => (
+                            <option
+                                value={item.seller._id}
+                            >
+                                {item.seller.firstName} {item.seller.lastName}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="basicInput">Last Name</label>
+                    <label for="basicInput">Amount</label>
                     <input type="text" class="form-control" 
-                        placeholder="Last Name" 
+                        placeholder="Amount" 
                         onChange={handalerChnages} 
-                        value={formData.lastName}
-                        name="lastName" />
+                        value={formData.unitPrice}
+                        name="unitPrice" />
                 </div>
                 <div class="form-group">
-                    <label for="basicInput">Email id</label>
-                    <input type="text" class="form-control" readOnly placeholder="Email Id" 
+                    <label for="basicInput">Quantities</label>
+                    <input type="text" class="form-control" placeholder="Quantities" 
                         onChange={handalerChnages} 
-                        value={formData.emailId}
-                        name="emailId" 
+                        value={formData.quantities}
+                        name="quantities" 
                     />
                 </div>
-                <div class="form-group">
-                    <label for="basicInput">Mobile Number</label>
-                    <div className="mobileNumber editPro mt-2">
-                        <select className="mobileCode">
-                            {cuntryData.map((item, index) => (
-                                <>
-                                  {item.code === "US" ? (
-                                    <option
-                                        name="category"
-                                        key={item.name}
-                                        value={item.dial_code}
-                                    >
-                                        { item.dial_code}
-                                    </option>
-                                    ) : (
-                                    ""
-                                    )}
-                                </>
-                            ))}
-                        </select>
-                        <input type="text" 
-                            className="form-control" 
-                            placeholder="Mobile No" 
-                            onChange={handalerChnages} 
-                            value={mobileData}
-                            name="mobileNo"
-                        />
-                    </div>
+                {/* <div class="form-group">
+                    <label for="basicInput">Product details</label>
+                    <textarea placeholder='Enter product details' rows="5" cols="5" 
+                     value={formData.product_des}
+                     name="product_des"
+                     onChange={handalerChnages} 
+                    className='form-control'></textarea>
                 </div> */}
               </div>
               <div class="modal-footer">
-              {/* <button type="button" 
-                class="btn btn-primary" onClick={editSellerData}>Submit</button> */}
+              <button type="button" 
+                class="btn btn-primary" onClick={editSellerData}>Submit</button>
               </div>
             </div>
         </Modal>

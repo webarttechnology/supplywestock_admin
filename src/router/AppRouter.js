@@ -16,6 +16,7 @@ import MenageBuyerData from "../page/MenageBuyerData";
 import ManageBuyerEnquiry from "../page/ManageBuyerEnquiry";
 import { ToastContainer } from "react-toastify";
 import Message from "../page/Message";
+import ManageOrderData from "../page/ManageOrderData";
 const AppRouter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setdarkMode] = useState(localStorage.getItem("darkThem"));
@@ -61,6 +62,8 @@ const AppRouter = () => {
                 <Route path="/message" element={<Message />} />
                 <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry setIsLogin={setIsLogin}/>} />
                 <Route path="/change-password" element={<ChangesPassword />} />
+                <Route path="/manage-order" element={<ManageOrderData />} />
+                
               </Routes>
             </div>
           </>
