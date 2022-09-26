@@ -19,9 +19,10 @@ const Message = () => {
     const [text, setText] = useState("");
     const [typeData, setTypeData] = useState("")
     const [typeUserid, setTypeUserid] = useState("")
+    const [typeId, setTypeId] = useState("")
 
     const messageHandaler = (data) => {  
-        socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"), typing: data === "" ? false : true})
+        socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("_userId"), typing: data === "" ? false : true})
         setText(data)
     }
 
@@ -69,9 +70,8 @@ const Message = () => {
         socket.on("display", (data) => {
             console.log("display", data);
             setTypeData(data.typing)
-            setTypeUserid(data.user)
-            //setFeedMess(data);
-            //feedMess.push(data)
+            setTypeUserid(data.chatCode)
+            setTypeId(data.user)
         });
 
         socket.on("receiveChat", (data) => {
@@ -108,6 +108,7 @@ const Message = () => {
                                             typeData={typeData}
                                             messageSend={handleOnEnter}
                                             typeUserid={typeUserid}
+                                            typeId={typeId}
                                         />
                                     )}
                                     
