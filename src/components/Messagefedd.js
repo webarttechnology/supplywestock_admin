@@ -39,12 +39,12 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
         <div className='messinput'>
             <div id="subscription_area">
                 <div class="container">
-                    {/* <div className='row'>
+                    <div className='row'>
                         {typeUserid === localStorage.getItem("_userId") ? (""):(
                             <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
                         )}
                         
-                    </div> */}
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div className="mess_type_input">

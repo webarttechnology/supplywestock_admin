@@ -133,6 +133,31 @@ export const menufacther_delete = async (data, header) => {
     }
 }
 
+export const order_delete = async (data, header) => {
+    try {
+        const url = c.ORDER + "/" + data;
+        const res = await axios.delete(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+export const order_listData_byId = async (data, header) => {
+    try {
+        const url = c.ORDER + "/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
 
 export const enquriys_list = async ( header) => {
     try {
@@ -320,6 +345,59 @@ export const user_update_buyer = async (data, header) => {
     try {
         const url = c.BUYER;
         const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? UPDATE BUYER
+export const order_data = async (data, header) => {
+    try {
+        const url = c.ORDER;
+        const res = await axios.post(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? UPDATE BUYER
+export const order_data_edit = async (data, header) => {
+    try {
+        const url = c.ORDER;
+        const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? UPDATE BUYER
+export const order_data_list = async (header) => {
+    try {
+        const url = c.ORDER;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? UPDATE BUYER
+export const order_data_list_id = async (data, header) => {
+    try {
+        const url = c.ORDER + "/" + data;
+        const res = await axios.get(url, {
             headers: JSON.parse(header),
           });
         return res;

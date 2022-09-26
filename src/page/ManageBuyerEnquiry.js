@@ -72,14 +72,22 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
   }
 
   const editSellerData = async () => {
+    const header = localStorage.getItem("_tokenCode");
     try {
         const reqObj = {
             buyerId: buyerId,
+            sellerId:formData.sellerId,
             enquiryId: enquerisId,
             unitPrice: formData.unitPrice,
             quantities: formData.quantities
         }
         console.log("reqObj", reqObj);
+        const response = await API.order_data(reqObj, header);
+        console.log("response", response);
+        if (response.data.success === 1) {
+            closeModal()
+            setFormData(initialData) 
+        }
     } catch (error) {
         
     }
@@ -172,8 +180,8 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                             {item.activeAdmin === "0" ? (
                                                 ""
                                             ):(
-                                                <button class="btn btn-primary icon" onClick={() => openModalSellar(item._id, item.buyer.emailId)}>
-                                                    Order generate
+                                                <button class="btn btn-primary icon" onClick={() => openModalSellar(item._id, item.buyer._id)}>
+                                                    Generate order 
                                                 </button>
                                             )}
                                         </div>

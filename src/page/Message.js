@@ -43,7 +43,7 @@ const Message = () => {
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatfeedShow(chatCodeid, header)
-            console.log("response", response);
+            console.log("sssresponse", response);
             setFeedMess(response.data.data)
         } catch (error) {
             

@@ -10,3 +10,4 @@ export const SELLERS = `${URL}/sellers`;
 export const BUYER = `${URL}/buyers`;
 export const CHATROOM = `${URL}/chatroom`;
 export const CHAT = `${URL}/chat`;
+export const ORDER = `${URL}/order`;

@@ -4,29 +4,43 @@ import { IMG } from '../Api/constant';
 import * as API from "../Api/index";
 import Modal from 'react-responsive-modal';
 import { toast } from 'react-toastify';
+const initialData = {
+  manufacturerId:"",
+  product_des:"",
+  unitPrice:"",
+  quantities:"",
+  sellerId:""
+}
 const ManageOrderData = () => {
   const [tableData, setTableData] = useState([])
-  const [loader, setLoader] = useState(false)
+  const [formData, setFormData] = useState(initialData)
   const [openModal, setOpenModal] = useState(false);
   const [menuFect, setMenuFect] = useState("")
-  const [sellerId, setSellerId] = useState("")
-  const [imageData, setImageData] = useState("")
+  const [buyerId, setBuyerId] = useState("")
+  const [enquerisId, setEnquerisId] = useState("")
+  const [sellerList, setSellerList] = useState([])
 
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");
     try {
-      const response = await API.menufacther_listing(header)
+      const response = await API.order_data_list(header)
+      console.log("responseOrder", response);
       setTableData(response.data.data)
     } catch (error) {
       
     }
+  }
+
+  const handalerChnages = (e) =>{
+    const { name, value } = e.target;  
+      setFormData({ ...formData, [name]: value });
   }
   
   
   const menufactheDelete = async(menuFecId) =>{
     const header = localStorage.getItem("_tokenCode");
     try {
-      const response = await API.menufacther_delete(menuFecId , header)
+      const response = await API.order_delete(menuFecId , header)
       console.log("response", response);
       if (response.data.success === 1) {
         getdetailsData()
@@ -36,43 +50,42 @@ const ManageOrderData = () => {
     }
   }
 
-  const imageUploading = (e) => {
-    let images = e.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      setImageData(reader.result);
-    };
-    reader.readAsDataURL(images);
-  };
+  
 
   const openModalSellar = async(sellerId) =>{
     const header = localStorage.getItem("_tokenCode");
-    setSellerId(sellerId)
+    console.log("buyerIds", formData.buyerId);
+    setBuyerId(sellerId)
     setOpenModal(true)
     try {
-        const response = await API.menufacther_listing_id(sellerId, header)
-        console.log("sellerResponse", response);
-        setMenuFect(response.data.data.name);
+        const response = await API.order_listData_byId(sellerId, header)
+        console.log("OrderResponse", response);
+        setFormData(response.data.data[0])
+        const selleresponse = await API.enquriys_sellerId(response.data.data[0].enquiryId, header)
+        console.log("selleresponse", selleresponse);
+        setSellerList(selleresponse.data.data);
     } catch (error) {
         
     }
 }
-
-  const editSellerData = async () => {
-    const header = localStorage.getItem("_tokenCode");
-    try {
-        const reqObj = {
-            name: menuFect,
-            image: imageData,
-            id: sellerId,
-        }
-        console.log("reqObj", reqObj);
-        const response = await API.edit_menufact(reqObj, header)
-        console.log("response",response);
-        if (response.data.success === 1) {
+const editSellerData = async () => {
+  const header = localStorage.getItem("_tokenCode");
+  try {
+      const reqObj = {
+        id: formData.buyerId,
+        sellerId:formData.sellerId,
+        unitPrice: formData.unitPrice,
+        quantities: formData.quantities
+      }
+      console.log("reqObj", reqObj);
+      const response = await API.order_data_edit(reqObj, header);
+      console.log("response", response);
+      if (response.data.success === 1) {
+          closeModal()
+          setFormData(initialData) 
           closeModal()
           getdetailsData()
-          toast(response.data.data, {
+          toast(response.data.msg, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -83,23 +96,16 @@ const ManageOrderData = () => {
             type: "success",
             theme: "colored",
           });
-          setMenuFect("")
-          setImageData("")
-        }
-    } catch (error) {
-        
-    }
+      }
+  } catch (error) {
+      
   }
-
-  
-
-  const closeModal = () =>{
-    setOpenModal(false)
+}
+ 
+const closeModal = () =>{
+  setOpenModal(false)
 }
   
-  
-  
-
   useEffect(() => {
     getdetailsData()
   }, [])
@@ -132,8 +138,9 @@ const ManageOrderData = () => {
                     <thead>
                       <tr>
                         <th>No.</th>
-                        <th>NAME</th>
-                        <th>IMAGE</th>
+                        <th>Buyer Details</th>
+                        <th>Seller Details</th>
+                        <th>Enquiry</th>
                         <th>ACTION</th>
                       </tr>
                     </thead>
@@ -141,16 +148,21 @@ const ManageOrderData = () => {
                       {tableData.map((item, index)=> (
                         <tr key={index}>
                           <td class="text-bold-500">{index + 1}</td>
-                          <td class="text-bold-500">{item.value} </td>
+                          <td class="text-bold-500">{item.buyer[0].firstName +' '+ item.buyer[0].lastName} </td>
+                          <td class="text-bold-500">{item.buyer[0].firstName +' '+ item.seller[0].lastName} </td>
                           <td>
-                            <img className='menufLogo' src={IMG + item.image} alt="" />
+                              <ul className='ps-0'>
+                                <li><strong>Product details : </strong> {item.enquiry[0].product_des}</li>
+                                <li><strong>Quantities : </strong> {item.enquiry[0].quantities}</li>
+                                <li><strong>Size : </strong> {item.enquiry[0].size}</li>
+                              </ul>
                           </td>
                           <td>
                             <div class="buttons">
-                              <span onClick={() => openModalSellar(item.id)} class="btn icon btn-primary">
+                              <span onClick={() => openModalSellar(item._id)} class="btn icon btn-primary">
                                 <i class="bi bi-pencil"></i>
                               </span>
-                              <button onClick={()=>menufactheDelete(item.id)} class="btn icon btn-danger">
+                              <button onClick={()=> menufactheDelete(item._id)} class="btn icon btn-danger">
                                 <i class="bi bi-x"></i>
                               </button>
                             </div>
@@ -165,41 +177,57 @@ const ManageOrderData = () => {
           </div>
         </div>
       </section>
-    <Modal open={openModal} onClose={closeModal}>
-        <div class="modal-content editSeller">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Manufacturers</h5>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-                <label for="basicInput">Name</label>
-                <input type="text" onChange={(e)=> setMenuFect(e.target.value)}
-                    value={menuFect} 
-                    name="firstName" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="basicInput"> Upload image</label>
-                <label for="file" className="fileUploade">
-                    <div class="icon dripicons dripicons-browser-upload"></div>{" "}
-                        Upload image
-                    <form encType="multipart/form-data">
-                    <input
-                        hidden
-                        id="file"
-                        type="file"
-                        onChange={imageUploading}
-                        class="image-preview-filepond"
+      <Modal open={openModal} onClose={closeModal}>
+            <div class="modal-content editSeller">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order Edit</h5>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="basicInput">Seller List</label>
+                    <select className="form-control" onChange={handalerChnages} name="sellerId" value={formData.sellerId}>
+                        <option>--- Select ---</option>
+                        {sellerList.map((item, index) => (
+                            <option
+                                value={item.seller._id}
+                            >
+                                {item.seller.firstName} {item.seller.lastName}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="basicInput">Amount</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Amount" 
+                        onChange={handalerChnages} 
+                        value={formData.unitPrice}
+                        name="unitPrice" />
+                </div>
+                <div class="form-group">
+                    <label for="basicInput">Quantities</label>
+                    <input type="text" class="form-control" placeholder="Quantities" 
+                        onChange={handalerChnages} 
+                        value={formData.quantities}
+                        name="quantities" 
                     />
-                    </form>
-                </label>
+                </div>
+                {/* <div class="form-group">
+                    <label for="basicInput">Product details</label>
+                    <textarea placeholder='Enter product details' rows="5" cols="5" 
+                     value={formData.product_des}
+                     name="product_des"
+                     onChange={handalerChnages} 
+                    className='form-control'></textarea>
+                </div> */}
+              </div>
+              <div class="modal-footer">
+              <button type="button" 
+                class="btn btn-primary" onClick={editSellerData}>Submit</button>
+              </div>
             </div>
-          </div>
-          <div class="modal-footer">
-          <button type="button" 
-            class="btn btn-primary" onClick={editSellerData}>Submit</button>
-          </div>
-        </div>
-    </Modal>
+        </Modal>
+     
     </>
   )
 }
