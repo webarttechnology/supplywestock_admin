@@ -142,7 +142,7 @@ const MenageSallerData = () => {
     <>
       <section class="section">
             <div class="page-heading">
-                <h3>Manage Saller</h3>
+                <h3>Manage Saller Data</h3>
             </div>
             <div class="card">
                 <div class="card-header">

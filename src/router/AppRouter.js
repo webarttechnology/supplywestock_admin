@@ -50,8 +50,8 @@ const AppRouter = () => {
                 />
               </header>
               <Routes>
-                <Route path="/" element={<Base />} />
-                <Route path="/dashboard" element={<Base />} />
+                <Route path="/" element={<Base setIsLogin={setIsLogin} />} />
+                <Route path="/dashboard" element={<Base setIsLogin={setIsLogin} />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/table" element={<Table />} />
                 <Route path="/profile" element={<Profile />} />

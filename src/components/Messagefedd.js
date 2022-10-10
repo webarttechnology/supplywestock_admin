@@ -4,7 +4,7 @@ import InputEmoji from "react-input-emoji";
 import ScrollToBottom from "react-scroll-to-bottom";
 const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData, typeUserid,typeId}) => {
 
-    console.log("typeUserid", typeUserid);
+    console.log("feedMess", feedMess);
 
   return (
     <>

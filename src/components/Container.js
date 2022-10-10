@@ -4,17 +4,28 @@ import Table from "./Table";
 import * as API from "../Api/index";
 import { useState } from "react";
 import { useEffect } from "react";
-const Container = () => {
+import { useNavigate } from "react-router";
+const Container = ({setIsLogin}) => {
   const [sellerCont, setSellerCont] = useState([])
   const [buyerCount, setBuyerCount] = useState([])
   const [manufact, setManufact] = useState([])
 
   console.log("sellerCont", sellerCont , buyerCount);
-
+  const navigate = useNavigate();
   const getdetailsData = async () =>{
     const header = localStorage.getItem("_tokenCode");
     try {
       const sellerCount = await API.seller_count(header)
+      console.log("vdhjkvhds", sellerCount);
+      if (sellerCount.data.success === 2) {
+        localStorage.removeItem("isLoginCheck");
+        setIsLogin(localStorage.removeItem("isLoginCheck"));
+        localStorage.removeItem("_userId")
+        localStorage.removeItem("_tokenCode")
+        if (localStorage.removeItem("isLoginCheck") === undefined) {
+          navigate("/");
+        }
+      }
       sellerCount.data.data.map((item, index) =>(
         <>
           {

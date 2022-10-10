@@ -149,7 +149,7 @@ const closeModal = () =>{
                         <tr key={index}>
                           <td class="text-bold-500">{index + 1}</td>
                           <td class="text-bold-500">{item.buyer[0].firstName +' '+ item.buyer[0].lastName} </td>
-                          <td class="text-bold-500">{item.buyer[0].firstName +' '+ item.seller[0].lastName} </td>
+                          <td class="text-bold-500">{item.seller[0].firstName +' '+ item.seller[0].lastName} </td>
                           <td>
                               <ul className='ps-0'>
                                 <li><strong>Product details : </strong> {item.enquiry[0].product_des}</li>
