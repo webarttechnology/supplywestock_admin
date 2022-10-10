@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react'
 import { useState } from 'react';
 import InputEmoji from "react-input-emoji";
@@ -22,6 +23,7 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
                                         <p>{item.message[0].msg}</p>
                                     </div>
                                     <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                    <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
                                 </div>
                                 ):(
                                 <>  
@@ -30,6 +32,7 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
                                             <p> {item.message[0].msg} </p>
                                         </div>
                                         <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                        <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
                                     </div>
                                 </>
                             )}

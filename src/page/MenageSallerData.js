@@ -109,7 +109,7 @@ const MenageSallerData = () => {
         try {
             const response = await API.delete_saller(sellerId, header)
             console.log("response", response);
-            if (response.data.success === 1) {
+            if (response.data.sucess === 1) {
                 getdetailsData()
                 toast(response.data.msg, {
                 position: "top-right",
