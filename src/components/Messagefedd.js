@@ -17,17 +17,19 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
                     {feedMess.map((item, index)=>(
                         <>
                             {localStorage.getItem("_userId") != item.senderId ? (
-                                <div className='align-items-end col-md-12 d-flex'>
+                                <div className='col-md-12 d-flex flex-column'>
                                     <div className='isResiver'>
                                         <p>{item.message[0].msg}</p>
                                     </div>
+                                    <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                 </div>
                                 ):(
                                 <>  
-                                    <div className='align-items-end col-md-12 d-flex justify-content-end text-end'>
+                                    <div className='align-items-end flex-column col-md-12 d-flex justify-content-end text-end pe-4'>
                                         <div className='isSender'>
                                             <p> {item.message[0].msg} </p>
                                         </div>
+                                        <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                     </div>
                                 </>
                             )}

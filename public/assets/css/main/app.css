@@ -17356,7 +17356,6 @@ li {
   background: rgb(155, 106, 108, 27%);
   border-radius: 5px;
   text-align: start;
-  margin-bottom: 15px;
   width: fit-content;
 }
 .isSender{
@@ -17364,7 +17363,6 @@ li {
   background: #fff;
   border-radius: 5px;
   text-align: end;
-  margin-bottom: 15px;
   width: fit-content;
 }
 .isSender p{
@@ -17419,4 +17417,11 @@ li {
 }
 .scroll {
   height: 377px;
+}
+.usermessName{
+  color: #bfbfbf;
+  text-transform: capitalize;
+  margin-bottom: 18px;
+  font-size: 12px;
+  margin-top: 5px;
 }
