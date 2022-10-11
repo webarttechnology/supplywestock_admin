@@ -28,6 +28,9 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
                                 <div className='col-md-12 d-flex flex-column'>
                                     <div className='isResiver'>
                                         <p>{item.message[0].msg}</p>
+                                        <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
+                                          "hh:mm A"
+                                        )}</span>
                                     </div>
                                     <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                     <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
@@ -37,6 +40,9 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
                                     <div className='align-items-end flex-column col-md-12 d-flex justify-content-end text-end pe-4'>
                                         <div className='isSender'>
                                             <p> {item.message[0].msg} </p>
+                                            <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
+                                          "hh:mm A"
+                                        )}</span>
                                         </div>
                                         <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                         <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
@@ -51,12 +57,12 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
         <div className='messinput'>
             <div id="subscription_area">
                 <div class="container">
-                    <div className='row'>
+                    {/* <div className='row'>
                         {typeId === localStorage.getItem("_userId") ? (""):(
                             <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
                         )}
                         
-                    </div>
+                    </div> */}
                     <div class="row">
                         <div class="col-sm-12">
                             <div className="mess_type_input">

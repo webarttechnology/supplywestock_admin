@@ -17427,3 +17427,10 @@ li {
 .messDate{
   font-size: 12px;
 }
+.messTime{
+  font-size: 12px;
+  display: flex;
+  justify-content: end;
+  margin-top: 7px;
+  color: #f56c6c;
+}
