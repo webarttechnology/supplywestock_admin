@@ -7,10 +7,17 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, typeData,
 
     console.log("feedMess", feedMess);
 
+    console.log("userDetails", userDetails)
+
   return (
     <>
         <div className='headerTitle'>
-            <h4>{userDetails[0].firstName} {userDetails[0].lastName}, {userDetails[1].firstName} {userDetails[1].lastName}, {userDetails[2].firstName} {userDetails[2].lastName}</h4>
+            {userDetails.length === 2 ?(
+                <h4>{userDetails[0].firstName} {userDetails[0].lastName}, {userDetails[1].firstName} {userDetails[1].lastName}</h4>
+            ):(
+                <h4>{userDetails[0].firstName} {userDetails[0].lastName}, {userDetails[1].firstName} {userDetails[1].lastName}, {userDetails[2].firstName} {userDetails[2].lastName}</h4>
+            )}
+            
         </div>
         <div className='messfeed'>
             <div className='row m-0'>
