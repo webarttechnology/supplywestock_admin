@@ -131,6 +131,23 @@ const MenageBuyerData = () => {
       }
   }
 
+  const searchHandaler = async(e) => {
+    console.log("e.target.value", e.target.value);
+    if (e.target.value === "") {
+      getdetailsData()
+    }else{
+      const header = localStorage.getItem("_tokenCode");
+      try {
+        const response = await API.search_buyerData(e.target.value, header)
+        console.log("searchHandaler", response);
+        setTableData(response.data.data)
+      } catch (error) {
+        
+      }
+    }
+    
+  }
+
     const closeModal = () =>{
         setOpenModal(false)
     }
@@ -148,13 +165,18 @@ const MenageBuyerData = () => {
           <div class="card">
             <div class="card-header">
               <div className='row'>
-                  <div className='col-md-10'>
+                  <div className='col-md-7'>
                       <h4 class="card-title">Manage Buyer Data</h4>
                   </div>
-                  <div className='col-md-2 text-end'>
-                      {/* <Link to="/add-manufacturers" class="btn icon btn-primary">
-                          <i class="bi bi-plus"></i>
-                      </Link> */}
+                  <div className='col-md-5 text-end'>
+                      <div class="form-group position-relative has-icon-right">
+                        <input type="text" class="form-control" placeholder="Search here" 
+                          onChange={searchHandaler}
+                        />
+                        <div class="form-control-icon">
+                          <i class="bi bi-search"></i>
+                        </div>
+                      </div>
                   </div>
               </div>
             </div>

@@ -15,7 +15,7 @@ const Header = ({ ToggleSidebar, setIsLogin }) => {
   };
 
   return (
-    <div className="header_sec">
+    <div className="header_sec pb-3">
       <div className="row">
         <div className="col-lg-1 text-center">
           <span className="fa-fw select-all fas togale" onClick={ToggleSidebar}>
@@ -23,7 +23,7 @@ const Header = ({ ToggleSidebar, setIsLogin }) => {
           </span>
         </div>
         <div className="col-lg-5">
-          <div class="form-group position-relative has-icon-right">
+          <div class="form-group position-relative has-icon-right d-none">
             <input type="text" class="form-control" placeholder="Search here" />
             <div class="form-control-icon">
               <i class="bi bi-search"></i>

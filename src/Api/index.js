@@ -83,6 +83,22 @@ export const add_menufact = async (data, header) => {
         return e.response;
     }
 }
+
+export const menufact_search = async (data, header) => {
+    try {
+        const url = c.MENUFACTURS + "/search/" + data;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        //const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+
 export const edit_menufact = async (data, header) => {
     try {
         const url = c.MENUFACTURS;
@@ -208,6 +224,19 @@ export const showAll_sellerData = async (header) => {
     }
 }
 
+export const search_sellersData = async (data, header) => {
+    try {
+        const url = c.SELLERS + "/search/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
 export const showAll_buyerData = async (header) => {
     try {
         const url = c.BUYER;
@@ -220,6 +249,17 @@ export const showAll_buyerData = async (header) => {
     }
 }
 
+export const search_buyerData = async (data, header) => {
+    try {
+        const url = c.BUYER + "/search/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
 // ? manufacturer_saller)by id
 export const manufacturer_saller = async (data, header) => {
     try {

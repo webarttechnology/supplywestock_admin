@@ -13,19 +13,21 @@ const initialData = {
 const ManageBuyerEnquiry = ({setIsLogin}) => {
 
    const navigate = useNavigate()
-   const [formData, setFormData] = useState(initialData)
+    const [formData, setFormData] = useState(initialData)
     const [tableData, setTableData] = useState([])
     const [openModal, setOpenModal] = useState(false);
     const [sellerList, setSellerList] = useState([])
     const [buyerId, setBuyerId] = useState("")
     const [enquerisId, setEnquerisId] = useState("")
+    
+    console.log("tableData", tableData);
 
     const handalerChnages = (e) =>{
         const { name, value } = e.target;  
         setFormData({ ...formData, [name]: value });
     }
 
-  const getdetailsData = async () =>{
+  const getdetailsData = async () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.enquriys_list(header)
