@@ -20,7 +20,7 @@ const Message = () => {
     const [typeData, setTypeData] = useState("")
     const [typeUserid, setTypeUserid] = useState("")
     const [typeId, setTypeId] = useState("")
-
+    const [sallerid, setSallerid] = useState("")
     const messageHandaler = (data) => {  
         socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("_userId"), typing: data === "" ? false : true})
         setText(data)
@@ -38,8 +38,12 @@ const Message = () => {
    } 
 
 
-   const chatShowIng = async (chatCodeid, userDet) => {
+   const chatShowIng = async (chatCodeid, userDet, user) => {
         setUserDetails(userDet)
+        console.log("user", user);
+        user.map((item, index)=>(
+            item.roleId === "2" ? setSallerid(item.userCode) : ""
+          ))
         setChatCode(chatCodeid)
         const header = localStorage.getItem("_tokenCode");
         try {
@@ -68,7 +72,7 @@ const Message = () => {
 
   const messageAccept = async () => {
     console.log("jdfd");
-    
+
   }
    
   const regectMessage = async () => {
@@ -118,6 +122,7 @@ const Message = () => {
                                             messageSend={handleOnEnter}
                                             regectMessage={regectMessage}
                                             messageAccept={messageAccept}
+                                            sallerid={sallerid}
                                         />
                                     )}
                                     

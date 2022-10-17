@@ -5,7 +5,7 @@ import InputEmoji from "react-input-emoji";
 import moment from 'moment-timezone'
 import ScrollToBottom from "react-scroll-to-bottom";
 import { TIMEZONE } from '../Api/constant';
-const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAccept, regectMessage, typeId}) => {
+const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAccept, regectMessage, sallerid}) => {
 
     console.log("feedMess", feedMess);
 
@@ -14,12 +14,13 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAc
   return (
     <>
         <div className='headerTitle'>
-            {userDetails.length === 2 ?(
-                <h4>{userDetails[0].firstName} {userDetails[0].lastName}, {userDetails[1].firstName} {userDetails[1].lastName}</h4>
-            ):(
-                <h4>{userDetails[0].firstName} {userDetails[0].lastName}, {userDetails[1].firstName} {userDetails[1].lastName}, {userDetails[2].firstName} {userDetails[2].lastName}</h4>
-            )}
-            
+            <h4>
+                Product name : {userDetails[0].productName}
+            </h4>
+            <h4>
+                Product details :  {userDetails[0].product_des}
+            </h4>
+            <h4>Seller Id : {sallerid}</h4>    
         </div>
         <div className='messfeed'>
             <div className='row m-0'>
@@ -57,7 +58,7 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAc
                                               )}
                                           </span>
                                         </div>
-                                        <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                        <span className='usermessName'>{item.user.userCode}</span>
                                         {/* <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p> */}
                                     </div>
                                     ):(
@@ -87,7 +88,7 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAc
                                                     )}
                                                 </span>
                                             </div>
-                                            <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                            <span className='usermessName'>{item.user.userCode}</span>
                                             
                                         </div>
                                     </>
