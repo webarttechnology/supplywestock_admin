@@ -17358,6 +17358,11 @@ li {
   text-align: start;
   width: fit-content;
 }
+.isResiver p .isResiver {
+  background: none;
+  padding: 0;
+}
+
 .isSender{
   padding: 7px 15px;
   background: #fff;
@@ -17407,6 +17412,51 @@ li {
 .messLeft{
   width: 50%;
 }
+.buttonS{
+  background-color: #0d6efd;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.buttonSr{
+  background-color: #fd0d0d;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comandBtn{
+  display: flex;
+  justify-content: flex-end;
+    align-items: center;
+}
+.proDetails{
+  padding-left: 0 !important;
+}
+
+.proDetails li{
+  display: block;
+  font-size: 15px;
+}
+.headingPd{
+  font-size: 15px;
+  color: #fff;
+}
+.proDetails li strong{
+  color: #f89a9a;
+}
+.isSender .headingPd{
+  color: #000000;
+}
+.isSender .proDetails li{
+  color: #424B54;
+}
 .messRight{
   display: flex;
   flex-direction: column;
@@ -17433,4 +17483,29 @@ li {
   justify-content: end;
   margin-top: 7px;
   color: #f56c6c;
+}
+
+.buttonS{
+  background-color: #0d6efd;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.buttonSr{
+  background-color: #fd0d0d;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comandBtn{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

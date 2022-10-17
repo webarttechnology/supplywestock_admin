@@ -166,7 +166,7 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                     <td>{item.product_des}</td>
                                     <td>
                                         <div class="buttons">
-                                            {item.activeAdmin === "0" ? (
+                                            {/* {item.activeAdmin === "0" ? (
                                                 <button onClick={() => approveAdmin(item._id)} class="btn icon btn-primary">
                                                     Approve
                                                 </button>
@@ -174,18 +174,18 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                                 <button class="btn icon btn-success">
                                                     Approved
                                                 </button>
-                                            )}
+                                            )} */}
                                             
                                             <a href="#" class="btn icon btn-danger">
                                                 <i class="bi bi-x"></i>
                                             </a>
-                                            {item.activeAdmin === "0" ? (
+                                            {/* {item.activeAdmin === "0" ? (
                                                 ""
                                             ):(
                                                 <button class="btn btn-primary icon" onClick={() => openModalSellar(item._id, item.buyer._id)}>
                                                     Generate order 
                                                 </button>
-                                            )}
+                                            )} */}
                                         </div>
                                     </td>
                                 </tr>

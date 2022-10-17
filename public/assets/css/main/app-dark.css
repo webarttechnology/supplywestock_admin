@@ -7016,6 +7016,32 @@ fieldset:disabled .theme-dark .btn {
   margin: 1.5rem 0 1rem;
   padding: 0 1rem;
 }
+
+
+.buttonS{
+  background-color: #0d6efd;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.buttonSr{
+  background-color: #fd0d0d;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comandBtn{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .theme-dark .sidebar-wrapper .menu .sidebar-link {
   align-items: center;
   border-radius: 0.5rem;
@@ -7814,4 +7840,28 @@ fieldset:disabled .theme-dark .btn {
 .theme-dark .was-validated :invalid ~ .invalid-feedback,
 .theme-dark .was-validated :invalid ~ .invalid-tooltip {
   display: block;
+}
+.buttonS{
+  background-color: #0d6efd;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.buttonSr{
+  background-color: #fd0d0d;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comandBtn{
+  display: flex;
+  justify-content: flex-end;
+    align-items: center;
 }

@@ -145,7 +145,6 @@ const MenageBuyerData = () => {
         
       }
     }
-    
   }
 
     const closeModal = () =>{

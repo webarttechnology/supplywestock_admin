@@ -65,7 +65,16 @@ const Message = () => {
         message: text,
     });
   }
+
+  const messageAccept = async () => {
+    console.log("jdfd");
+    
+  }
    
+  const regectMessage = async () => {
+    console.log("regectMessage");
+  }
+
    useEffect(() => {
         socket.on("display", (data) => {
             console.log("display", data);
@@ -107,8 +116,8 @@ const Message = () => {
                                             text={text}
                                             typeData={typeData}
                                             messageSend={handleOnEnter}
-                                            typeUserid={typeUserid}
-                                            typeId={typeId}
+                                            regectMessage={regectMessage}
+                                            messageAccept={messageAccept}
                                         />
                                     )}
                                     
