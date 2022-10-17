@@ -36,6 +36,11 @@ const Messagefedd = ({setText, text, userDetails,feedMess,messageSend, messageAc
                                     <div className='col-md-12 d-flex flex-column'>
                                         <div className='isResiver'>
                                             <p> <div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /> </p>
+                                            {item.message[0].btn === "payment" ? (
+                                                <div class="comandBtn">
+                                                <a class="buttonS" target="_blank" href={item.message[0].link}>Payment</a>
+                                                </div>
+                                            ): "" } 
                                             {item.message[0].btn === "accept" ? (
                                                 <>
                                                     <div class="comandBtn">
