@@ -12,11 +12,11 @@ const MessSidBar = ({userList, chatShowIng}) => {
                     <li onClick={() => chatShowIng(item._id, item.enquiry, item.users)}>
                         {item.users.length === 2 ? (
                             <>
-                                {item.users[0].firstName} {item.users[0].lastName}, {item.users[1].firstName} {item.users[1].lastName}
+                                {item.users[0].userCode}, {item.users[1].userCode}
                             </>
                         ):(
                             <>
-                               {item.users[0].firstName} {item.users[0].lastName}, {item.users[1].firstName} {item.users[1].lastName}, {item.users[2].firstName} {item.users[2].lastName}
+                               {item.users[0].userCode}, {item.users[1].userCode}, {item.users[2].userCode}
                             </>
                         )}  
                     </li>

@@ -176,9 +176,9 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                                 </button>
                                             )} */}
                                             
-                                            <a href="#" class="btn icon btn-danger">
+                                            {/* <a href="#" class="btn icon btn-danger">
                                                 <i class="bi bi-x"></i>
-                                            </a>
+                                            </a> */}
                                             {/* {item.activeAdmin === "0" ? (
                                                 ""
                                             ):(
