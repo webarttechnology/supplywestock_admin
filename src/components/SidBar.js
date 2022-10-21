@@ -137,18 +137,19 @@ const SidBar = ({ isOpen, setdarkMode, darkMode }) => {
               </NavLink>
             </li>
             <li class="sidebar-item">
+              <NavLink to="/addition-charges" className="sidebar-link">
+                <i class="bi bi-collection-fill"></i>
+                <span>Addition charges</span>
+              </NavLink>
+            </li>
+            <li class="sidebar-item">
               <NavLink to="/message" className="sidebar-link">
                 <i class="bi bi-chat-left-dots-fill"></i>
                 <span>Message</span>
               </NavLink>
             </li>
 
-            {/* <li class="sidebar-item">
-              <NavLink to="/table" className="sidebar-link">
-                <i class="bi bi-collection-fill"></i>
-                <span>Table</span>
-              </NavLink>
-            </li> */}
+            
           </ul>
         </div>
       </div>

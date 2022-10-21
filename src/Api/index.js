@@ -149,6 +149,19 @@ export const menufacther_delete = async (data, header) => {
     }
 }
 
+export const amountCharge = async (data, header) => {
+    try {
+        const url = c.CHARGES;
+        const res = await axios.patch(url, data,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
 export const order_delete = async (data, header) => {
     try {
         const url = c.ORDER + "/" + data;
