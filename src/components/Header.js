@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
+import { SOCEKT, URL } from "../Api/constant";
 const Header = ({ ToggleSidebar, setIsLogin }) => {
+  const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
-
+  const socket = io(SOCEKT);
   const logoutbtn = () => {
     localStorage.removeItem("isLoginCheck");
     setIsLogin(localStorage.removeItem("isLoginCheck"));
-    localStorage.removeItem("_userId")
-    localStorage.removeItem("_tokenCode")
+    localStorage.removeItem("_userId");
+    localStorage.removeItem("_tokenCode");
     if (localStorage.removeItem("isLoginCheck") === undefined) {
       navigate("/");
     }
   };
 
+  console.log("notification", notification);
+
+  const notificationrender = () => {
+    socket.emit("notification", {
+      id: localStorage.getItem("_userId"),
+    });
+  };
+  useEffect(() => {
+    console.log("heloooooooooooo");
+    socket.on("receiveNotification", (data) => {
+      console.log("receiveNotification", data.notification);
+      setNotification(data.notification);
+    });
+    notificationrender();
+  }, []);
+
   return (
-    <div className="header_sec pb-3">
+    <div className="header_sec">
       <div className="row">
         <div className="col-lg-1 text-center">
           <span className="fa-fw select-all fas togale" onClick={ToggleSidebar}>
@@ -35,30 +54,22 @@ const Header = ({ ToggleSidebar, setIsLogin }) => {
           <div class="buttons">
             <ul>
               <li class="subdrop">
-                {/* <Link to="/" class="btn icon btn-primary rounded-pill notifi">
+                <Link to="/" class="btn icon btn-primary rounded-pill notifi">
                   <i class="bi bi-bell"></i>
-                  <span className="notiFicationCount">5</span>
-                </Link> */}
+                  <span className="notiFicationCount">
+                    {notification.length}
+                  </span>
+                </Link>
                 <ul className="subDropDwn">
                   <h4 className="notifiHeading">Notifications</h4>
-                  <hr></hr>
-                  <li>
-                    <Link to="/dashboard">
-                      You're viewing icons in v5.15.4.
-                    </Link>
-                  </li>
-                  <hr></hr>
-                  <li>
-                    <Link to="/dashboard">
-                      You're viewing icons in v5.15.4.
-                    </Link>
-                  </li>
-                  <hr></hr>
-                  <li>
-                    <Link to="/dashboard">
-                      You're viewing icons in v5.15.4.
-                    </Link>
-                  </li>
+                  {notification.map((item, index) => (
+                    <>
+                      <hr></hr>
+                      <li>
+                        <Link to="#">{item.message}</Link>
+                      </li>
+                    </>
+                  ))}
                 </ul>
               </li>
             </ul>

@@ -18,7 +18,12 @@ import { ToastContainer } from "react-toastify";
 import Message from "../page/Message";
 import ManageOrderData from "../page/ManageOrderData";
 import AdditionCharges from "../page/AdditionCharges";
+import { io } from "socket.io-client";
+import { SOCEKT, URL } from "../Api/constant";
+import { useEffect } from "react";
 const AppRouter = () => {
+  const [notification, setNotification] = useState([]);
+  const socket = io(SOCEKT);
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setdarkMode] = useState(localStorage.getItem("darkThem"));
 
@@ -31,9 +36,23 @@ const AppRouter = () => {
     isOpen === true ? setIsOpen(false) : setIsOpen(true);
   };
 
+  const notificationrender = () => {
+    socket.emit("notification", {
+      id: localStorage.getItem("_userId"),
+    });
+  };
+  useEffect(() => {
+    console.log("heloooooooooooo");
+    socket.on("receiveNotification", (data) => {
+      console.log("receiveNotification", data.notification);
+      setNotification(data.notification);
+    });
+    notificationrender();
+  }, []);
+
   return (
     <div className={darkMode ? "theme-dark" : ""}>
-      <ToastContainer/>
+      <ToastContainer />
       <BrowserRouter>
         {isLogin ? (
           <>
@@ -48,11 +67,15 @@ const AppRouter = () => {
                   isLogin={isLogin}
                   setIsLogin={setIsLogin}
                   ToggleSidebar={ToggleSidebar}
+                  notification={notification}
                 />
               </header>
               <Routes>
                 <Route path="/" element={<Base setIsLogin={setIsLogin} />} />
-                <Route path="/dashboard" element={<Base setIsLogin={setIsLogin} />} />
+                <Route
+                  path="/dashboard"
+                  element={<Base setIsLogin={setIsLogin} />}
+                />
                 <Route path="/form" element={<Form />} />
                 <Route path="/table" element={<Table />} />
                 <Route path="/profile" element={<Profile />} />
@@ -61,7 +84,10 @@ const AppRouter = () => {
                 <Route path="/manage-seller" element={<MenageSallerData />} />
                 <Route path="/manage-buyer" element={<MenageBuyerData />} />
                 <Route path="/message" element={<Message />} />
-                <Route path="/manage-buyer-enquiry" element={<ManageBuyerEnquiry setIsLogin={setIsLogin}/>} />
+                <Route
+                  path="/manage-buyer-enquiry"
+                  element={<ManageBuyerEnquiry setIsLogin={setIsLogin} />}
+                />
                 <Route path="/change-password" element={<ChangesPassword />} />
                 <Route path="/manage-order" element={<ManageOrderData />} />
                 <Route path="/addition-charges" element={<AdditionCharges />} />
@@ -76,7 +102,9 @@ const AppRouter = () => {
             />
             <Route
               path="/forgot-password"
-              element={<ForgotPassword isLogin={isLogin} setIsLogin={setIsLogin} />}
+              element={
+                <ForgotPassword isLogin={isLogin} setIsLogin={setIsLogin} />
+              }
             />
           </Routes>
         )}
