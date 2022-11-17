@@ -148,12 +148,12 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                         <table class="table table-striped mb-0">
                         <thead>
                             <tr>
-                            <th>No.</th>
-                            <th>Manufacturer</th>
-                            <th>Quantities</th>
-                            <th>Size</th>
-                            <th>Product details</th>
-                            <th>ACTION</th>
+                                <th>No.</th>
+                                <th>Manufacturer</th>
+                                <th>Quantities</th>
+                                <th>Size</th>
+                                <th>Product details</th>
+                            {/* <th>ACTION</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -164,9 +164,9 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                     <td>{item.quantities}</td>
                                     <td class="text-bold-500">{item.size}</td>
                                     <td>{item.product_des}</td>
-                                    <td>
+                                    {/* <td>
                                         <div class="buttons">
-                                            {/* {item.activeAdmin === "0" ? (
+                                            {item.activeAdmin === "0" ? (
                                                 <button onClick={() => approveAdmin(item._id)} class="btn icon btn-primary">
                                                     Approve
                                                 </button>
@@ -174,20 +174,20 @@ const ManageBuyerEnquiry = ({setIsLogin}) => {
                                                 <button class="btn icon btn-success">
                                                     Approved
                                                 </button>
-                                            )} */}
+                                            )}
                                             
-                                            {/* <a href="#" class="btn icon btn-danger">
+                                            <a href="#" class="btn icon btn-danger">
                                                 <i class="bi bi-x"></i>
-                                            </a> */}
-                                            {/* {item.activeAdmin === "0" ? (
+                                            </a>
+                                            {item.activeAdmin === "0" ? (
                                                 ""
                                             ):(
                                                 <button class="btn btn-primary icon" onClick={() => openModalSellar(item._id, item.buyer._id)}>
                                                     Generate order 
                                                 </button>
-                                            )} */}
+                                            )}
                                         </div>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             ))}
                             

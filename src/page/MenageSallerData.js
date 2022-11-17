@@ -156,13 +156,13 @@ const MenageSallerData = () => {
     <>
       <section class="section">
             <div class="page-heading">
-                <h3>Manage Saller Data</h3>
+                <h3>Manage Seller Data</h3>
             </div>
             <div class="card">
                 <div class="card-header">
                 <div className='row'>
                     <div className='col-md-7'>
-                        <h4 class="card-title">Manage Saller Data</h4>
+                        <h4 class="card-title">Manage Seller Data</h4>
                     </div>
                     <div className='col-md-5 text-end'>
                         <div class="form-group position-relative has-icon-right">
