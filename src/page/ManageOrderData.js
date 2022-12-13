@@ -20,13 +20,10 @@ const ManageOrderData = () => {
   const [enquerisId, setEnquerisId] = useState("");
   const [sellerList, setSellerList] = useState([]);
 
-  console.log("tableData", tableData);
-
   const getdetailsData = async () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.order_data_list(header);
-      console.log("responseOrder", response);
       setTableData(response.data.data);
     } catch (error) {}
   };

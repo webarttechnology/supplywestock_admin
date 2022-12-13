@@ -43,9 +43,9 @@ const ForgotPassword = ({ isLogin, setIsLogin }) => {
       const reqObj = {
         emailId: formData.email,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.forgot_password(reqObj);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         setIsMail(1);
       }
@@ -59,7 +59,7 @@ const ForgotPassword = ({ isLogin, setIsLogin }) => {
         otp: OTP,
       };
       const response = await API.admin_mailVerifi(reqObj);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         setIsMail(2);
       }
@@ -138,9 +138,9 @@ const ForgotPassword = ({ isLogin, setIsLogin }) => {
         password: passWordData.password,
         otp: OTP,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.reset_password_buyer(reqObj);
-      console.log("bbbresponse", response);
+
       if (response.data.success === 1) {
         navigate("/");
         toast(response.data.msg, {

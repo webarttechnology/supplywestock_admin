@@ -17,17 +17,13 @@ const Header = ({ ToggleSidebar, setIsLogin }) => {
     }
   };
 
-  console.log("notification", notification);
-
   const notificationrender = () => {
     socket.emit("notification", {
       id: localStorage.getItem("_userId"),
     });
   };
   useEffect(() => {
-    console.log("heloooooooooooo");
     socket.on("receiveNotification", (data) => {
-      console.log("receiveNotification", data.notification);
       setNotification(data.notification);
     });
     notificationrender();

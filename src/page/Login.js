@@ -4,24 +4,24 @@ import loginImg from "../assets/images/login2.png";
 import { useNavigate } from "react-router";
 import * as appUtils from "../helpers/appUtils";
 import * as API from "../Api/index";
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/logo.png";
 import { toast } from "react-toastify";
 const initialDatalog = {
-  email:"",
-  password:"",
-}
+  email: "",
+  password: "",
+};
 
 const Login = ({ isLogin, setIsLogin }) => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(initialDatalog)
-//ERROR-MSGS
-const [errorMsg, setErrorMsg] = useState("");
-const [errorEmail, setErrorEmail] = useState("");
-const [errorPassword, setErrorPassword] = useState("");
+  const [formData, setFormData] = useState(initialDatalog);
+  //ERROR-MSGS
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
   const navigate = useNavigate();
 
   //? LOGIN SUBMIT BUTTON
-  const loginSubmit = async() => {
+  const loginSubmit = async () => {
     setLoading(true);
     let flag = validate();
     if (!flag) {
@@ -31,22 +31,22 @@ const [errorPassword, setErrorPassword] = useState("");
 
     try {
       const reqObj = {
-        emailId:formData.email,
-        password:formData.password
-      }
-      console.log("reqObj",reqObj);
-      const response = await API.admin_login(reqObj)
-      console.log("response",response);
+        emailId: formData.email,
+        password: formData.password,
+      };
+
+      const response = await API.admin_login(reqObj);
+
       if (response.data.success === 1) {
         localStorage.setItem("isLoginCheck", true);
-        localStorage.setItem("_userId", response.data.data.id)
+        localStorage.setItem("_userId", response.data.data.id);
         const headerObj = {
           Authorization: `Bearer ${response.data.token_code}`,
         };
-        localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
+        localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
         setIsLogin(!isLogin);
         navigate("/dashboard");
-      }else{
+      } else {
         toast(response.data.msg, {
           position: "top-right",
           autoClose: 5000,
@@ -57,35 +57,30 @@ const [errorPassword, setErrorPassword] = useState("");
           draggable: true,
           progress: undefined,
           theme: "colored",
-      });
+        });
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
-  
 
   // ? HANDALER
   const handalerChnages = (e) => {
-    const { name, value } = e.target;  
-    setLoading(false)
+    const { name, value } = e.target;
+    setLoading(false);
     switch (name) {
-        case "email":
-          setErrorEmail("");
-          setErrorMsg(false);
-          break;
-        case "password":
-          setErrorPassword("");
-          break;
-        default:
-      }
+      case "email":
+        setErrorEmail("");
+        setErrorMsg(false);
+        break;
+      case "password":
+        setErrorPassword("");
+        break;
+      default:
+    }
     setFormData({ ...formData, [name]: value });
-} 
-
+  };
 
   const validate = () => {
-    const { email, password } =
-      formData;
+    const { email, password } = formData;
     let flag = true;
 
     let validateEmail = appUtils.validateEmail(email);
@@ -144,11 +139,7 @@ const [errorPassword, setErrorPassword] = useState("");
             <img src={loginImg} alt="" />
           </div>
           <div className="col-md-5 text-center">
-            <img
-              src={logo}
-              alt=""
-              className="w-50 loginLogo"
-            />
+            <img src={logo} alt="" className="w-50 loginLogo" />
             <div className="loginSec">
               <h3>login</h3>
               <div class="form-group position-relative has-icon-left mb-3">

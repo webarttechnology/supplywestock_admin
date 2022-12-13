@@ -12,13 +12,11 @@ const Manufacturers = () => {
   const [sellerId, setSellerId] = useState("");
   const [imageData, setImageData] = useState("");
 
-  console.log("tableData", tableData);
-
   const getdetailsData = async () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.menufacther_listing(header);
-      console.log("responseMenu", response);
+
       setTableData(response.data.data);
     } catch (error) {}
   };
@@ -27,7 +25,6 @@ const Manufacturers = () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.menufacther_delete(menuFecId, header);
-      console.log("response", response);
       if (response.data.success === 1) {
         getdetailsData();
       }
@@ -49,7 +46,7 @@ const Manufacturers = () => {
     setOpenModal(true);
     try {
       const response = await API.menufacther_listing_id(sellerId, header);
-      console.log("sellerResponse", response);
+
       setMenuFect(response.data.data.name);
     } catch (error) {}
   };
@@ -62,9 +59,9 @@ const Manufacturers = () => {
         image: imageData,
         id: sellerId,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.edit_menufact(reqObj, header);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         closeModal();
         getdetailsData();
@@ -86,14 +83,13 @@ const Manufacturers = () => {
   };
 
   const searchHandaler = async (e) => {
-    console.log("e.target.value", e.target.value);
     if (e.target.value === "") {
       getdetailsData();
     } else {
       const header = localStorage.getItem("_tokenCode");
       try {
         const response = await API.menufact_search(e.target.value, header);
-        console.log("searchHandaler", response);
+
         setTableData(response.data.data);
       } catch (error) {}
     }

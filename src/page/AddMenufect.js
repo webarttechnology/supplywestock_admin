@@ -24,9 +24,9 @@ const AddMenufect = () => {
         name: menuFect,
         image: imageData,
       };
-      console.log("reQobj", reQobj);
+
       const response = await API.add_menufact(reQobj, header);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         toast("Data added successfuly", {
           position: "top-right",

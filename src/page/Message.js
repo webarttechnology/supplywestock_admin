@@ -10,7 +10,7 @@ const initial = {
 
 const Message = () => {
   const socket = io("https://api.supplywestock.com:3001");
-  console.log("socket", socket);
+
   const [userList, setUserList] = useState([]);
   const [feedMess, setFeedMess] = useState([]);
   const [formData, setFormData] = useState(initial);
@@ -36,14 +36,14 @@ const Message = () => {
         localStorage.getItem("_userId"),
         header
       );
-      console.log("responsedf", response);
+
       setUserList(response.data.data);
     } catch (error) {}
   };
 
   const chatShowIng = async (chatCodeid, userDet, user) => {
     setUserDetails(userDet);
-    console.log("user", user);
+
     user.map((item, index) =>
       item.roleId === "2" ? setSallerid(item.userCode) : ""
     );
@@ -51,7 +51,7 @@ const Message = () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.chatfeedShow(chatCodeid, header);
-      console.log("sssresponse", response);
+
       setFeedMess(response.data.data);
     } catch (error) {}
   };
@@ -62,7 +62,6 @@ const Message = () => {
   };
 
   function handleOnEnter(text) {
-    console.log("chatCode", chatCode);
     socket.emit("createChat", {
       senderId: localStorage.getItem("_userId"),
       chatroomId: chatCode,
@@ -70,24 +69,18 @@ const Message = () => {
     });
   }
 
-  const messageAccept = async () => {
-    console.log("jdfd");
-  };
+  const messageAccept = async () => {};
 
-  const regectMessage = async () => {
-    console.log("regectMessage");
-  };
+  const regectMessage = async () => {};
 
   useEffect(() => {
     socket.on("display", (data) => {
-      console.log("display", data);
       setTypeData(data.typing);
       setTypeUserid(data.chatCode);
       setTypeId(data.user);
     });
 
     socket.on("receiveChat", (data) => {
-      console.log("receiveChat", data);
       setFeedMess(data);
     });
     chatRoomShow();
