@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import * as API from "../Api/index";
 const MessSidBar = ({ userList, chatShowIng }) => {
-  console.log("userList", userList);
   return (
     <>
       <div className="sidBarMess">
