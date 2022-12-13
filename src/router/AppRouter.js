@@ -42,9 +42,7 @@ const AppRouter = () => {
     });
   };
   useEffect(() => {
-    console.log("heloooooooooooo");
     socket.on("receiveNotification", (data) => {
-      console.log("receiveNotification", data.notification);
       setNotification(data.notification);
     });
     notificationrender();
